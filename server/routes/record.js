@@ -27,9 +27,10 @@ recordRoutes.route("/projects").get(function (req, res) {
 // This section will help you get a single record by id
 recordRoutes.route("/projects/:id").get(function (req, res) {
  let db_connect = dbo.getDb();
- let myquery = { _id: ObjectId(req.params.id) };
+ let myquery = { name: req.params.id };
+
  db_connect
-   .collection("records")
+   .collection("projects")
    .findOne(myquery, function (err, result) {
      if (err) throw err;
      res.json(result);

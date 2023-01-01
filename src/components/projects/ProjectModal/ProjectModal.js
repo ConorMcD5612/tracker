@@ -2,6 +2,7 @@
 
 
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router'
 
 import {Tasks} from './Tasks'
 
@@ -10,12 +11,14 @@ export const ProjectModal = ({ closeModal, ...props }) => {
  
   const [tasks, setTasks] = useState([])
 
+  const params = useParams()
+
   useEffect(() => {
-    fetch('http://localhost:5000/projects/:id')
+
+    fetch(`http://localhost:5000/projects/${params.id}`)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.tasks)
-     
+     setTasks(data.tasks)
     })
     console.log("fetched")
   }, [tasks.length])

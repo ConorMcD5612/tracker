@@ -4,6 +4,7 @@ import { ProjectSection } from './components/projects/ProjectSection';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { AddProject } from "./components/projects/AddProject";
 import { Project } from "./components/projects/Project";
+import { ProjectModal } from "./components/projects/ProjectModal/ProjectModal"
 
 
  
@@ -16,7 +17,8 @@ function App() {
         <Routes>
           <Route path="projects" element={<ProjectSection />} />
           <Route path="add-project" element={<AddProject />} />
-        </Routes>
+          <Route path="projects/:id" element={<ProjectModal />} />
+        </Routes> 
       </BrowserRouter>
     </div>
 
