@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
-
+import React, { useState } from 'react'
 import { AddTaskModal } from './AddTaskModal'
 
-export const AddTaskBtn = ({ tasks, setTasks, ...props }) => {
+export const AddSubTask = ({ tasks, setTasks, ...props }) => {
 
   const [addTaskModalOpen, setAddTaskModalOpen] = useState(false)
 

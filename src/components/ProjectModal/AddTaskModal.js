@@ -7,9 +7,6 @@ export const AddTaskModal = ({ setTasks, tasks, addTaskModalOpen, setAddTaskModa
     const taskInput = async (e) => {
         e.preventDefault()
 
-        // let updatedArr = [...tasks]
-        // updatedArr.splice(props.index + 1, 0, { tier: tasks[props.index].tier + 1, description: taskDescription, first: true })
-        // setTasks(updatedArr)
         //have to make task object
         let newTask = {
             tier: tasks[props.index].tier + 1,

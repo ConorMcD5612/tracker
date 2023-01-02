@@ -1,13 +1,11 @@
-import * as ReactDOM from "react-dom"
 import './App.css';
-import { ProjectSection } from './components/projects/ProjectSection';
+import { ProjectSection } from './components/ProjectSection';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { AddProject } from "./components/projects/AddProject";
-import { Project } from "./components/projects/Project";
-import { ProjectModal } from "./components/projects/ProjectModal/ProjectModal"
+import { AddProject } from "./components/AddProject";
+import { ProjectModal } from "./components/ProjectModal/ProjectModal"
 
 
- 
+
 
 function App() {
   return (
@@ -21,7 +19,6 @@ function App() {
         </Routes> 
       </BrowserRouter>
     </div>
-
   );
 }
 

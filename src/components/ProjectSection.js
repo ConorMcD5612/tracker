@@ -1,5 +1,5 @@
 import React from 'react'
-import { Project } from './Projects'
+import { Project } from './Project'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -16,6 +16,7 @@ export const ProjectSection = () => {
                 setProjects(data)
             })
     }, [projects.length])
+    
     return (
 
         <div className='card project-section'>
