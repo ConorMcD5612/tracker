@@ -1,6 +1,6 @@
 
-import { AddSubTask } from './AddSubTask'
-import { AddTier1 } from './AddTier1'
+import { AddTaskBtn } from './AddTaskBtn'
+
 import { CompleteBtn } from './CompleteBtn'
 
 
@@ -20,14 +20,14 @@ export const Tasks = ({ tasks, setTasks }) => {
               <h3>{task.tier}</h3>
               <div>
                 <CompleteBtn task={task} tasks={tasks} setTasks={setTasks}/>
-                <AddSubTask task={task} index={index} setTasks={setTasks} tasks={tasks} />
+                <AddTaskBtn type="sub"  task={task} index={index} setTasks={setTasks} tasks={tasks} />
                 <button className='btn'><i className="bi bi-chevron-down"></i></button>
               </div>
             </div>
           </div>
         </>
       )})}
-      <AddTier1 tasks={tasks} setTasks={setTasks} />
+      <AddTaskBtn type="new" tasks={tasks} setTasks={setTasks} />
     </>
   )
 }

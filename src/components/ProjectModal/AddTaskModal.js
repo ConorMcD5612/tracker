@@ -1,30 +1,39 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal'
+import { useParams } from 'react-router'
 
 export const AddTaskModal = ({ setTasks, tasks, addTaskModalOpen, setAddTaskModalOpen, ...props }) => {
     const [taskDescription, setTaskDescription] = useState("")
 
+    const params = useParams()
+
     const taskInput = async (e) => {
         e.preventDefault()
-
-        //have to make task object
-        let newTask = {
-            tier: tasks[props.index].tier + 1,
-            description: taskDescription
+        let newTask = {}
+        if (props.type == "sub") {
+            newTask = {
+                prevTaskIndex: props.index,
+                tier: tasks[props.index].tier + 1,
+                description: taskDescription
+            }
+            console.log(props.index)
         }
-        console.log(tasks.length)
 
-        //post data 
-        await fetch("http://localhost:5000/tasks/add", {
+        if (props.type == "new") {
+            newTask = {
+                tier: 1,
+                description: taskDescription
+            }
+        }
+
+        await fetch(`http://localhost:5000/projects/${params.id}`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(newTask)
-        }).then(setTasks([newTask])) // force re-render ProjectModal to fetch new-tasks 
-
-
-
+        })
+        setTasks([...tasks, newTask])
         closeTaskModal()
     }
 

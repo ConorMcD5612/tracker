@@ -24,7 +24,7 @@ recordRoutes.route("/projects").get(function (req, res) {
     });
 });
 
-// This section will help you get a single record by id
+// This gets document based on id so I can get task array 
 recordRoutes.route("/projects/:id").get(function (req, res) {
   let db_connect = dbo.getDb();
   let myquery = { name: req.params.id };
@@ -52,19 +52,35 @@ recordRoutes.route("/projects/add").post(function (req, response) {
   });
 });
 
-//Goal of this is to update the tasks array in a document
+//Goal of this is to add tasks to tasks array
 recordRoutes.route("/projects/:id").post(function (req, response) {
   let db_connect = dbo.getDb();
   let myquery = { name: req.params.id };
-  let newvalues = {
+  let newValues = {
     $push: {
       "tasks": { description: req.body.description, tier: req.body.tier }
     }
   };
-  console.log(newvalues)
+
+  if (req.body.prevTaskIndex) {
+    console.log(req.body.prevTaskIndex)
+    newValues = {
+      $push: {
+        "tasks": {
+          $each: [{
+            description: req.body.description,
+            tier: req.body.tier
+          }],
+          $position: req.body.prevTaskIndex + 1
+        }
+      }
+    };
+  }
+  
+  console.log(newValues)
   db_connect
     .collection("projects")
-    .updateOne(myquery, newvalues, function (err, res) {
+    .updateOne(myquery, newValues, function (err, res) {
       if (err) throw err;
       console.log("1 document updated");
       response.json(res);

@@ -12,6 +12,8 @@ export const ProjectModal = ({ closeModal, ...props }) => {
   const [tasks, setTasks] = useState([])
 
   const params = useParams()
+  
+  
 
   useEffect(() => {
 
