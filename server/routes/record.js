@@ -56,6 +56,7 @@ recordRoutes.route("/projects/add").post(function (req, response) {
 recordRoutes.route("/projects/:id").post(function (req, response) {
   let db_connect = dbo.getDb();
   let myquery = { name: req.params.id };
+
   let newValues = {
     $push: {
       "tasks": { description: req.body.description, tier: req.body.tier }
@@ -76,7 +77,7 @@ recordRoutes.route("/projects/:id").post(function (req, response) {
       }
     };
   }
-  
+
   console.log(newValues)
   db_connect
     .collection("projects")
@@ -86,6 +87,34 @@ recordRoutes.route("/projects/:id").post(function (req, response) {
       response.json(res);
     });
 });
+
+// Remove a task changing the record not deleting it 
+recordRoutes.route("/projects/:id").delete((req, res) => {
+  console.log("MADE IT HERE BROTHA ")
+  console.log(req.params.id)
+  console.log(typeof req.params)
+  let db_connect = dbo.getDb();
+
+  let taskName = req.body.name
+  let projectName = req.params.id
+
+  let myQuery = { name: projectName }
+  console.log(`THIS IS TASK NAME:   ${taskName}`)
+  let newValues = {
+    $pull: {
+      tasks: { $in: [taskName] }
+    }
+  }
+
+  db_connect
+  .collection("projects")
+  .updateOne(myQuery, newValues, function (err, res) {
+    if (err) throw err;
+    console.log("deleted 1 task")
+    response.json(res)
+  })
+
+})
 
 // This section will help you delete a record
 recordRoutes.route("/:id").delete((req, response) => {
