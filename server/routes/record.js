@@ -89,20 +89,20 @@ recordRoutes.route("/projects/:id").post(function (req, response) {
 });
 
 // Remove a task changing the record not deleting it 
-recordRoutes.route("/projects/:id").delete((req, res) => {
+recordRoutes.route("/edit/:id").post((req, response) => {
   console.log("MADE IT HERE BROTHA ")
-  console.log(req.params.id)
-  console.log(typeof req.params)
+  console.log(req.body)
+
   let db_connect = dbo.getDb();
 
-  let taskName = req.body.name
+  let taskDescription = req.body.description
   let projectName = req.params.id
 
   let myQuery = { name: projectName }
-  console.log(`THIS IS TASK NAME:   ${taskName}`)
+  console.log(`THIS IS TASK NAME:   ${taskDescription}`)
   let newValues = {
     $pull: {
-      tasks: { $in: [taskName] }
+      tasks: {description: taskDescription}
     }
   }
 
