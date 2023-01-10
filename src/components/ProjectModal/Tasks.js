@@ -6,18 +6,22 @@ import { CompleteBtn } from './CompleteBtn'
 
 export const Tasks = ({ tasks, setTasks }) => {
   
-  // const haveComplete = () => {
-  //   if()
-  // }
+ let tierColors = {
+   1: "264653",
+   2: "2A9D8F",
+   3: "E9C46A",
+   4: "F4A261",
+   5: "E76F51",
+  }
 
- 
+  
   return (
     <>
 
       {tasks?.map((task, index) => {        
         return (
         <>
-          <div className='card' style={{ transform: `translateX(${task.tier}vw)` }}>
+          <div className='card' style={{ transform: `translateX(${task.tier}vw)`, backgroundColor: `#${tierColors[task.tier]}` }}>
             <div className='d-flex justify-content-between'>
               <h3>{task.description}</h3>
               <h3>{task.tier}</h3>
