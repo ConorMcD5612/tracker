@@ -19,3 +19,7 @@ h4, h5 {
   gap: .5rem;
 }
 
+.projectModal-container {
+  display: flex;
+  flex-direction: column;
+}

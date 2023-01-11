@@ -27,14 +27,21 @@ export const ProjectModal = ({ closeModal, ...props }) => {
 
 
   return (
-    <div>
+    <div className="projectModal-container">
+      <div>
       <h1>{props.name}</h1>
       <h2>Daily: 5hrs</h2>
       <h2>Weekly: 10hrs</h2>
       <h2>Total: 500 hrs </h2>
+      </div>
 
-      <h1>Tasks</h1>
+     <p className='project-description'>
+     is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
+     </p>
+
       <Tasks tasks={tasks} setTasks={setTasks} />
+
+
       <Link to="/projects">
         <button className='btn btn-primary'>OK</button>
       </Link>
