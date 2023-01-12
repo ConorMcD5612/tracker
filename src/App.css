@@ -20,6 +20,12 @@ h4, h5 {
 }
 
 .projectModal-container {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  
+}
+
+.task {
   display: flex;
-  flex-direction: column;
+  
 }

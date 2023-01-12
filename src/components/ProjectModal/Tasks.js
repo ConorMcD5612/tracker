@@ -21,8 +21,8 @@ export const Tasks = ({ tasks, setTasks }) => {
       {tasks?.map((task, index) => {        
         return (
         <>
-          <div className='card' style={{ transform: `translateX(${task.tier}vw)`, backgroundColor: `#${tierColors[task.tier]}` }}>
-            <div className='d-flex justify-content-between'>
+          <div className='tasks-container' style={{ backgroundColor: `#${tierColors[task.tier]}` }}>
+            <div className='task'>
               <h3>{task.description}</h3>
               <h3>{task.tier}</h3>
               <div>
