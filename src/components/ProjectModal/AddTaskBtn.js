@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { AddTaskModal } from './AddTaskModal'
+import { Plus } from 'react-feather'
 
 //willjust be addtask btn 
 export const AddTaskBtn = ({ tasks, setTasks, ...props }) => {
@@ -11,8 +12,8 @@ export const AddTaskBtn = ({ tasks, setTasks, ...props }) => {
     <>
       <button onClick={() => setAddTaskModalOpen(true)} className='btn btn-sm btn-success'>
         <div className='add-flex d-flex align-items-center '>
-          <i className='bi bi-plus-square-fill'></i>
-          <h5>{props.type}</h5>
+       <Plus />
+          
         </div>
       </button>
 

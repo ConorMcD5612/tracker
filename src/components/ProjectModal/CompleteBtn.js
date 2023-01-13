@@ -1,5 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router'
+import { Check } from 'react-feather';
 
 export const CompleteBtn = ({ task, tasks, setTasks }) => {
     const params = useParams();
@@ -18,10 +19,10 @@ export const CompleteBtn = ({ task, tasks, setTasks }) => {
     
     
     return (
-        <button onClick={() => completeTask()} className='btn btn-sm btn-success'>
-            <div className='add-flex d-flex align-items-center '>
-                <i class="bi bi-check-square-fill"></i>
-                <h5>Complete</h5>
+        <button onClick={() => completeTask()} className='complete-btn'>
+            <div >
+              <Check />
+              
             </div>
         </button>
     )

@@ -4,11 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 //Icons
-import "bootstrap-icons/font/bootstrap-icons.css";
-// Bootstrap CSS
-import "bootstrap/dist/css/bootstrap.min.css";
-// Bootstrap Bundle JS
-import "bootstrap/dist/js/bootstrap.bundle.min";
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

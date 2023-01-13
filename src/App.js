@@ -7,11 +7,13 @@ import { ProjectModal } from "./components/ProjectModal/ProjectModal"
 
 
 
+
 function App() {
   return (
 
     <div style={{ width: "100vw", height: "100vh" }}>
       <BrowserRouter>
+      
         <Routes>
           <Route path="projects" element={<ProjectSection />} />
           <Route path="add-project" element={<AddProject />} />
