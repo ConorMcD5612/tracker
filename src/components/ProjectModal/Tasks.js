@@ -22,10 +22,10 @@ export const Tasks = ({ tasks, setTasks }) => {
       {tasks?.map((task, index) => {
         return (
           <>
-            <div>
-              <div style={{ backgroundColor: `#${tierColors[task.tier]}`, width: `${50-task.tier}vw` }} className='task'>
+            <div className='task' style={{width: `${71 - task.tier}vw`}}>
+              <div style={{transform: `translateX(${task.tier}vw)`}}className='task-text'>
                 <h2>{task.description}</h2>
-                <h2>{task.tier}</h2>
+              
                 <div>
 
                   {/* If the next task exists and its tier is greater than the the current tasks tier render nothing, otherwise render completebtn */}
@@ -36,6 +36,9 @@ export const Tasks = ({ tasks, setTasks }) => {
                   <AddTaskBtn type="sub" task={task} index={index} setTasks={setTasks} tasks={tasks} />
                  <ChevronDown />
                 </div>
+              </div>
+              <div className="color" style={{ backgroundColor: `#${tierColors[task.tier]}`, marginLeft: `${task.tier}vw` }}>
+
               </div>
             </div>
           </>

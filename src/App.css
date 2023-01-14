@@ -1,6 +1,5 @@
-
 * {
-  margin: 0 ;
+  margin: 0;
   padding: 0;
 }
 
@@ -24,7 +23,8 @@ body {
   display: grid;
   grid-template-columns: 20% 80%;
   margin: 5vw;
-  
+  gap: 1vw;
+
 }
 
 .project-info {
@@ -41,6 +41,7 @@ body {
   border: .3rem solid black;
   margin-bottom: 2rem;
 }
+
 .hours {
   font-size: 2rem;
   margin-bottom: 2rem;
@@ -49,11 +50,32 @@ body {
 .tasks-container {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  overflow: hidden;
+
 }
 
 .task {
+  position: relative;
   display: flex;
-  justify-content: space-around;
-  width: 50vw;
+  flex-direction: column;
+  height: 5vh;
+}
+
+.task-text {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.task h2 {
+  margin-left: 1vw;
+}
+.color {
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }

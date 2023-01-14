@@ -11,7 +11,7 @@ import { ProjectModal } from "./components/ProjectModal/ProjectModal"
 function App() {
   return (
 
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div>
       <BrowserRouter>
       
         <Routes>
