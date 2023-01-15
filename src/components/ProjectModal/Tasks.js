@@ -3,6 +3,7 @@ import { AddTaskBtn } from './AddTaskBtn'
 
 import { CompleteBtn } from './CompleteBtn'
 import { ChevronDown } from 'react-feather'
+import { Task } from './Task'
 
 
 export const Tasks = ({ tasks, setTasks }) => {
@@ -16,16 +17,19 @@ export const Tasks = ({ tasks, setTasks }) => {
   }
 
 
+
+
+
   return (
     <>
-
       {tasks?.map((task, index) => {
         return (
           <>
             <div className='task' style={{width: `${task.tier == 1 ? 71 : 71 - task.tier}vw`}}>
               <div style={{transform: `translateX(${task.tier == 1 ? null : task.tier}vw)`}}className='task-text'>
+                <span className='task-description'>
                 <h2>{task.description}</h2>
-              
+                </span>
                 <div>
 
                   {/* If the next task exists and its tier is greater than the the current tasks tier render nothing, otherwise render completebtn */}
