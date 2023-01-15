@@ -22,8 +22,8 @@ export const Tasks = ({ tasks, setTasks }) => {
       {tasks?.map((task, index) => {
         return (
           <>
-            <div className='task' style={{width: `${71 - task.tier}vw`}}>
-              <div style={{transform: `translateX(${task.tier}vw)`}}className='task-text'>
+            <div className='task' style={{width: `${task.tier == 1 ? 71 : 71 - task.tier}vw`}}>
+              <div style={{transform: `translateX(${task.tier == 1 ? null : task.tier}vw)`}}className='task-text'>
                 <h2>{task.description}</h2>
               
                 <div>
@@ -37,7 +37,7 @@ export const Tasks = ({ tasks, setTasks }) => {
                  <ChevronDown />
                 </div>
               </div>
-              <div className="color" style={{ backgroundColor: `#${tierColors[task.tier]}`, marginLeft: `${task.tier}vw` }}>
+              <div className="color" style={{ backgroundColor: `#${tierColors[task.tier]}`, marginLeft: `${task.tier == 1 ? null : task.tier}vw` }}>
 
               </div>
             </div>

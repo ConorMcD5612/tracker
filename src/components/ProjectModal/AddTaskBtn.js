@@ -10,7 +10,7 @@ export const AddTaskBtn = ({ tasks, setTasks, ...props }) => {
   
   return (
     <>
-      <button onClick={() => setAddTaskModalOpen(true)} className='btn btn-sm btn-success'>
+      <button className="addTask-btn" onClick={() => setAddTaskModalOpen(true)} className='btn btn-sm btn-success'>
         <div className='add-flex d-flex align-items-center '>
        <Plus />
           
