@@ -14,10 +14,6 @@ export const ProjectModal = ({ closeModal, ...props }) => {
   const params = useParams()
 
 
-
-
-
-
   useEffect(() => {
 
     fetch(`http://localhost:5000/projects/${params.id}`)

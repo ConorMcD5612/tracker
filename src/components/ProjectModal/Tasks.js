@@ -1,12 +1,14 @@
 
 import { AddTaskBtn } from './AddTaskBtn'
-
+import { useState } from 'react'
 import { CompleteBtn } from './CompleteBtn'
 import { ChevronDown } from 'react-feather'
-import { Task } from './Task'
+
+import { TaskDescription } from './TaskDescription'
 
 
 export const Tasks = ({ tasks, setTasks }) => {
+ 
 
   let tierColors = {
     1: "264653",
@@ -25,11 +27,9 @@ export const Tasks = ({ tasks, setTasks }) => {
       {tasks?.map((task, index) => {
         return (
           <>
-            <div className='task' style={{width: `${task.tier == 1 ? 71 : 71 - task.tier}vw`}}>
-              <div style={{transform: `translateX(${task.tier == 1 ? null : task.tier}vw)`}}className='task-text'>
-                <span className='task-description'>
-                <h2>{task.description}</h2>
-                </span>
+            <div className='task' style={{ width: `${task.tier == 1 ? 71 : 71 - task.tier}vw` }}>
+              <div style={{ transform: `translateX(${task.tier == 1 ? null : task.tier}vw)` }} className='task-text'>
+               <TaskDescription task={task} />
                 <div>
 
                   {/* If the next task exists and its tier is greater than the the current tasks tier render nothing, otherwise render completebtn */}
@@ -38,7 +38,7 @@ export const Tasks = ({ tasks, setTasks }) => {
 
 
                   <AddTaskBtn type="sub" task={task} index={index} setTasks={setTasks} tasks={tasks} />
-                 <ChevronDown />
+                  <ChevronDown />
                 </div>
               </div>
               <div className="color" style={{ backgroundColor: `#${tierColors[task.tier]}`, marginLeft: `${task.tier == 1 ? null : task.tier}vw` }}>
