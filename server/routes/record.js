@@ -89,8 +89,8 @@ recordRoutes.route("/projects/:id").post(function (req, response) {
 });
 
 // Remove a task changing the record not deleting it 
-recordRoutes.route("/edit/:id").post((req, response) => {
-  console.log("MADE IT HERE BROTHA ")
+recordRoutes.route("/remove-task/:id").post((req, response) => {
+
   console.log(req.body)
 
   let db_connect = dbo.getDb();
@@ -102,19 +102,51 @@ recordRoutes.route("/edit/:id").post((req, response) => {
   console.log(`THIS IS TASK NAME:   ${taskDescription}`)
   let newValues = {
     $pull: {
-      tasks: {description: taskDescription}
+      tasks: { description: taskDescription }
     }
   }
 
   db_connect
-  .collection("projects")
-  .updateOne(myQuery, newValues, function (err, res) {
-    if (err) throw err;
-    console.log("deleted 1 task")
-    response.json(res)
-  })
+    .collection("projects")
+    .updateOne(myQuery, newValues, function (err, res) {
+      if (err) throw err;
+      console.log("deleted 1 task")
+      response.json(res)
+    })
 
 })
+
+//edit task update it in db 
+recordRoutes.route("/edit-task/:id").post((req, response) => {
+  let db_connect = dbo.getDb();
+  console.log(req.body)
+
+  let updatedDesc = req.body.updatedDescription
+  let oldDesc = req.body.oldDescription
+
+  console.log(updatedDesc, oldDesc)
+
+  let projectName = req.params.id
+
+  let myQuery = { name: projectName, "tasks.description": oldDesc }
+
+  //right now is just deletes the task?
+  //query is good 
+  let newValues = {
+    $set: {
+      "tasks.$.description": updatedDesc
+    }
+  }
+
+  db_connect
+    .collection("projects")
+    .updateOne(myQuery, newValues, function (err, res) {
+      if (err) throw err;
+      console.log("updated 1 task")
+      response.json(res)
+    })
+})
+
 
 // This section will help you delete a record
 recordRoutes.route("/:id").delete((req, response) => {

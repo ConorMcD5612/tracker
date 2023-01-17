@@ -6,7 +6,7 @@ export const CompleteBtn = ({ task, tasks, setTasks }) => {
     const params = useParams();
     const completeTask = async () => {
         let projectName = params.id
-        await fetch(`http://localhost:5000/edit/${projectName}`, {
+        await fetch(`http://localhost:5000/remove-task/${projectName}`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

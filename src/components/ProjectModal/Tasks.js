@@ -29,7 +29,7 @@ export const Tasks = ({ tasks, setTasks }) => {
           <>
             <div className='task' style={{ width: `${task.tier == 1 ? 71 : 71 - task.tier}vw` }}>
               <div style={{ transform: `translateX(${task.tier == 1 ? null : task.tier}vw)` }} className='task-text'>
-               <TaskDescription task={task} />
+               <TaskDescription task={task} tasks={tasks} setTasks={setTasks} />
                 <div>
 
                   {/* If the next task exists and its tier is greater than the the current tasks tier render nothing, otherwise render completebtn */}
