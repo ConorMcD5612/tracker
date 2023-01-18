@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { Tasks } from './Tasks'
 import { Link } from 'react-router-dom'
+import { ArrowLeft, Settings } from 'react-feather'
 
 
 export const ProjectModal = ({ closeModal, ...props }) => {
@@ -50,8 +51,9 @@ export const ProjectModal = ({ closeModal, ...props }) => {
 
         
         <Link to="/projects">
-          <button className=''>OK</button>
+        <ArrowLeft />
         </Link>
+        <Settings />
         </div>
       </div>
 
