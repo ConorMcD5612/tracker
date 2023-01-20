@@ -1,20 +1,21 @@
 import { Link } from 'react-router-dom'
+import { Plus } from 'react-feather'
 
 export const Project = (props) => {
 
     return (
         <>
-            <div className="list-group-item list-group-item-action">
-                <div className='d-flex w-100 justify-content-between'>
+         
+                <div className='project-flex'>
                     <h4>{props.name}</h4>
                     <h4> {props.hours}</h4>
                     <Link to={props.name} >
-                    <button className="btn">
-                        <i class="bi bi-gear-fill"></i>
+                    <button className="addProject-btn">
+                       <Plus />
                     </button>
                     </Link>
                 </div>
-            </div>
+       
          
         </>
     )

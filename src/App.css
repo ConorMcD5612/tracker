@@ -103,7 +103,7 @@ button {
 
 .project-section {
   width: 30%;
-  overflow-x: scroll;
+  overflow-y: scroll;
 }
 
 .stats {
@@ -111,4 +111,14 @@ button {
   align-items: center;
   justify-content: center;
  width: 70%;
+}
+
+.project-flex {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+}
+
+.addProject-btn{
+  justify-self: end;
 }

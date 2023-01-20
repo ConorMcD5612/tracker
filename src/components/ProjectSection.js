@@ -2,6 +2,7 @@ import React from 'react'
 import { Project } from './Project'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { Plus } from 'react-feather'
 
 export const ProjectSection = () => {
 
@@ -32,17 +33,17 @@ export const ProjectSection = () => {
                         <h4>Add Project</h4>
                         <Link to="/add-project">
                             <a>
-                                <button className='btn btn-primary btn-md'>+</button>
+                                <Plus />
                             </a>
                         </Link>
                     </div>
                 </div>
             </div>
-            
+
             <div className='stats'>
                 <h2>Stats go here</h2>
-
             </div>
+
             <div />
 
         </div>
