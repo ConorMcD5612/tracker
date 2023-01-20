@@ -7,14 +7,6 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-.project-section {
-  width: 25vw;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%)
-}
-
 .add-flex {
   gap: .5rem;
 }
@@ -95,4 +87,28 @@ button {
 .addTask-btn {
   
   width: 71vw;
+}
+
+.project-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  width: 80vw;
+  height: 50vh;
+  transform: translate(-50%,-50%);
+
+ 
+}
+
+.project-section {
+  width: 30%;
+  overflow-x: scroll;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ width: 70%;
 }

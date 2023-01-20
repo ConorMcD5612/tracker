@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 
 export const ProjectSection = () => {
 
-   
+
     const [projects, setProjects] = useState([])
-  
+
     useEffect(() => {
         fetch('http://localhost:5000/projects/')
             .then((response) => response.json())
@@ -16,27 +16,34 @@ export const ProjectSection = () => {
                 setProjects(data)
             })
     }, [projects.length])
-    
+
     return (
+        <div className='project-container'>
+            <div className='project-section'>
+                <header className='card-header'>
+                    <h1>Projects:</h1>
+                </header>
+                <div className='card-body'>
+                    <div className="list-group">
+                        {projects?.map((project, index) => (
+                            <Project key={index} name={project.name} hours={project.hours} />
+                        ))}
 
-        <div className='card project-section'>
-            <header className='card-header'>
-                <h1>Projects:</h1>
-            </header>
-            <div className='card-body'>
-                <div className="list-group">
-                    {projects?.map((project, index) => (
-                        <Project key={index} name={project.name} hours={project.hours} />
-                    ))}
-
-                    <h4>Add Project</h4>
-                    <Link to="/add-project">
-                        <a>
-                            <button className='btn btn-primary btn-md'>+</button>
-                        </a>
-                    </Link>
+                        <h4>Add Project</h4>
+                        <Link to="/add-project">
+                            <a>
+                                <button className='btn btn-primary btn-md'>+</button>
+                            </a>
+                        </Link>
+                    </div>
                 </div>
             </div>
+            
+            <div className='stats'>
+                <h2>Stats go here</h2>
+
+            </div>
+            <div />
 
         </div>
     )
