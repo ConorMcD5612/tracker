@@ -38,10 +38,15 @@ export const AddProject = ({ projects, setProjects }) => {
   }
 
   return (
-    <div className='list-group-item d-flex justify-content-between align-items-center bg-secondary'>
+    <div className='add-project'>
       <form onSubmit={(e) => submitHandler(e)}>
+        <h2>Name</h2>
         <input type="text" onChange={e => updateForm({ name: e.target.value })} />
-        <input type="number" onChange={e => updateForm({ hours: e.target.value })} />
+        <h2>Due</h2>
+        <input type="date" onChange={e => updateForm({ hours: e.target.value })} />
+        <h2>Description</h2>
+        <textarea ></textarea>
+        
         <button type="submit" >Create Project</button>
       </form>
     </div>
