@@ -3,7 +3,7 @@ import { AddTaskBtn } from './AddTaskBtn'
 import { useState } from 'react'
 import { CompleteBtn } from './CompleteBtn'
 import { ChevronDown } from 'react-feather'
-
+import { TimerBtn } from './TimerBtn'
 import { TaskDescription } from './TaskDescription'
 
 
@@ -33,7 +33,12 @@ export const Tasks = ({ tasks, setTasks }) => {
                 <div>
 
                   {/* If the next task exists and its tier is greater than the the current tasks tier render nothing, otherwise render completebtn */}
-                  {tasks[index + 1]?.tier > task.tier ? null : <CompleteBtn task={task} tasks={tasks} setTasks={setTasks} />}
+                  {tasks[index + 1]?.tier > task.tier ? null : (
+                  <>
+                  <TimerBtn />
+                  <CompleteBtn task={task} tasks={tasks} setTasks={setTasks} />
+                  </>
+                  )}
 
 
 

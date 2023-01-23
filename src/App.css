@@ -80,8 +80,13 @@ body {
 button {
   font-family: inherit;
   font-size: 100%;
+  background-color: inherit;
   border: 0;
   padding: 0;
+}
+
+button::hover {
+  cursor: grab;
 }
 
 .addTask-btn {
@@ -134,6 +139,8 @@ button {
   padding: 1vw;
 
 }
+
+
 
 textarea {
   resize: none;
