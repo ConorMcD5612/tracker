@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pause } from 'react-feather'
+import { Pause, Check } from 'react-feather'
 import { useState, useEffect, useRef } from 'react'
 
 export const Timer = () => {
@@ -7,13 +7,14 @@ export const Timer = () => {
     //Pause btn 
     // pause btn switches to start btn
     //need to be able to set time 
-    const [timer, setTimer] = useState("01:10")
+    const [timer, setTimer] = useState("01:00")
+    const [addTime, setAddTime] = useState(60)
+    const [showInput, setShowInput] = useState(false)
 
-     // We need ref in this, because we are dealing
+    // We need ref in this, because we are dealing
     // with JS setInterval to keep track of it and
     // stop it when needed
     const Ref = useRef(null);
-
 
     const getTimeRemaining = (e) => {
         // I think u are taking the time that is sarted and subtracting the time as of now
@@ -39,12 +40,10 @@ export const Timer = () => {
     }
 
     const clearTimer = (e) => {
-  
+
         // If you adjust it you should also need to
         // adjust the Endtime formula we are about
-        // to code next    
-        setTimer('01:10');
-        console.log(e, "e in cleartimer")
+
         if (Ref.current) clearInterval(Ref.current);
         const id = setInterval(() => {
             startTimer(e);
@@ -54,34 +53,63 @@ export const Timer = () => {
 
     const getDeadTime = () => {
         let deadline = new Date();
-  
+
         // This is where you need to adjust if 
         // you entend to add more time
-        deadline.setSeconds(deadline.getSeconds() + 70);
+        deadline.setSeconds(deadline.getSeconds() + addTime);
         return deadline;
     }
-    
-    // useEffect(() => {
-    //     clearTimer(getDeadTime());
-    // }, []);
+
 
     const onClickReset = () => {
         clearTimer(getDeadTime());
     }
 
+    const changeTimer = (e) => {
+        let seconds = Number(e.target.value.slice(3))
+        let minutes = Number(e.target.value.slice(0, 2))
+        let newTime = (minutes*60) + seconds
 
+        setTimer(e.target.value)
+        setAddTime(newTime)
+    }
 
+    const blurHandler = () => {
+        // check input regex 
+        //first character [0-9][0-9]:[0-9][0-9]
+        const regex = /[0-9][0-9]:[0-9][0-9]/
+        if(regex.test(timer)) {
+            setShowInput(false)
+        } else {
+            console.log("invalid input for timer format is : 00:00")
+        }
+    }
+
+   
 
 
     return (
-        <div>
-            <h2>{timer}</h2>
-            <button onClick={clearTimer}> ADD TIME</button>
-            <button >
-                <Pause />
-            </button>
-            <button onClick={onClickReset}>Done</button>
-        </div>
+
+        <div className='timer-container'>
+            <div className='timer-flex'>
+            {showInput ? (
+                <input autoFocus type="text" onBlur={blurHandler} onChange={(e) => changeTimer(e)} name="description" />
+            ) : (
+                <div onDoubleClick={() => setShowInput(true)} className='timer'>
+                    <h2>{timer}</h2>
+                </div >
+            )}
+
+
+            <div className='timerbtn-flex'>
+
+                <button className='pause-btn'>
+                    <Pause />
+                </button>
+                <button className='done-btn' onClick={onClickReset}><Check /></button>
+            </div>
+            </div>
+        </div >
 
     )
 }

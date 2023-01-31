@@ -146,3 +146,44 @@ textarea {
   resize: none;
   width: 100%;
 }
+
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60vw;
+  height: 60vh;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%,-50%);
+  border: 1px solid black;
+  padding: 1vw;
+}
+
+.timer {
+  font-size: 3rem;
+  cursor: grab;
+}
+
+
+.timerbtn-flex {
+  display: flex;
+  justify-content: space-between;
+ 
+}
+
+.pause-btn {
+  background-color: RGB(2, 141, 196);
+  width: 50%;
+  cursor: grab;
+  border: none;
+}
+
+.done-btn {
+  cursor: grab;
+  background-color: RGB(5, 232, 12);
+  width: 50%;
+  
+}
