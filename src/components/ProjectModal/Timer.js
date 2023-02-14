@@ -8,6 +8,7 @@ export const Timer = () => {
     // pause btn switches to start btn
     //need to be able to set time 
     const [timer, setTimer] = useState("01:00")
+    const [starterTime, setStarterTime] = useState("01:00")
     const [addTime, setAddTime] = useState(60)
     const [showInput, setShowInput] = useState(false)
     const [pauseTimer, setPauseTimer] = useState(false)
@@ -33,6 +34,7 @@ export const Timer = () => {
     const startTimer = (e) => {
         console.log(e, "e in starttimer")
         let { total, minutes, seconds } = getTimeRemaining(e);
+       
         if (total >= 0) {
 
             setTimer(
@@ -65,6 +67,14 @@ export const Timer = () => {
 
         // This is where you need to adjust if 
         // you entend to add more time
+        let seconds = Number(timer.slice(3))
+        let minutes = Number(timer.slice(0, 2))
+        let newTime = (minutes * 60) + seconds
+
+        let sSeconds = Number(starterTime.slice(3))
+        let sMinutes = Number(starterTime.slice(0, 2))
+        let sNewTime = (minutes * 60) + seconds
+       setAddTime(sNewTime > newTime ? sNewTime : newTime) 
         deadline.setSeconds(deadline.getSeconds() + addTime);
         return deadline;
     }
@@ -80,6 +90,7 @@ export const Timer = () => {
         let newTime = (minutes * 60) + seconds
 
         setTimer(e.target.value)
+        setStarterTime(e.target.value)
         setAddTime(newTime)
     }
 
@@ -88,9 +99,11 @@ export const Timer = () => {
         const regex = /[0-9][0-9]:[0-9][0-9]/
         if (regex.test(timer)) {
             setShowInput(false)
+            setTimer(starterTime)
         } else {
             console.log("invalid input for timer format is : 00:00")
         }
+       
     }
 
     const pauseHandler = () => {
@@ -124,7 +137,7 @@ export const Timer = () => {
                 <div className='timerbtn-flex'>
 
                     {pauseTimer ? (
-                        <button onClick={onClickReset}>
+                        <button className='pause-btn' onClick={onClickReset}>
                             <Play />
                         </button>
                     ) : (
