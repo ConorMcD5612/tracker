@@ -8,6 +8,7 @@ export const Timer = () => {
     // pause btn switches to start btn
     //need to be able to set time 
     const [timer, setTimer] = useState("01:00")
+    const [original, setOriginal] = useState(60)
     const [addTime, setAddTime] = useState(60)
     const [showInput, setShowInput] = useState(false)
     const [pauseTimer, setPauseTimer] = useState(false)
@@ -73,6 +74,15 @@ export const Timer = () => {
     const onClickReset = () => {
         clearTimer(getDeadTime());
     }
+    
+    const buttonStart = () =>
+    {
+        let deadline = new Date();
+        deadline.setSeconds(deadline.getSeconds() + original);
+        clearTimer(deadline);
+    }
+
+
 
     const changeTimer = (e) => {
         let seconds = Number(e.target.value.slice(3))
@@ -133,7 +143,7 @@ export const Timer = () => {
                         </button>
                     )}
 
-                    <button className='done-btn' onClick={onClickReset}><Check /></button>
+                    <button className='done-btn' onClick={buttonStart}><Check /></button>
                 </div>
             </div>
         </div >
