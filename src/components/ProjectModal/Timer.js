@@ -1,152 +1,65 @@
-import React from 'react'
-import { Pause, Check, Play } from 'react-feather'
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useStopwatch } from "react-use-precision-timer";
+//https://www.npmjs.com/package/react-use-precision-timer?activeTab=readme
 
 export const Timer = () => {
-    //Timer / time
-    //Pause btn 
-    // pause btn switches to start btn
-    //need to be able to set time 
-    const [timer, setTimer] = useState("01:00")
-    const [original, setOriginal] = useState(60)
-    const [addTime, setAddTime] = useState(60)
-    const [showInput, setShowInput] = useState(false)
-    const [pauseTimer, setPauseTimer] = useState(false)
-
-    // We need ref in this, because we are dealing
-    // with JS setInterval to keep track of it and
-    // stop it when needed
-    //this is ref to setinterval to clear it when reset / done
-    const Ref = useRef(null);
+  const stopwatch = useStopwatch();
+  const [[minutes, seconds], setMinSec] = useState([0, 0])
+  const [startSeconds, setStartSeconds] = useState(10)
 
 
-    const getTimeRemaining = (e) => {
-        // I think u are taking the time that is sarted and subtracting the time as of now
-        //e is the time that the timer started, date is current time in that moment
-        const total = Date.parse(e) - Date.parse(new Date());
-        const seconds = Math.floor((total / 1000) % 60);
-        const minutes = Math.floor((total / 1000 / 60) % 60);
-        return {
-            total, minutes, seconds
-        };
-    }
+  const startTimer = () => {
+    stopwatch.start();
+  }
 
-    const startTimer = (e) => {
-        console.log(e, "e in starttimer")
-        let { total, minutes, seconds } = getTimeRemaining(e);
-        if (total >= 0) {
+  const pauseHandler = () => {
+    stopwatch.isPaused() ? stopwatch.resume() : stopwatch.pause()
+  
+  }
 
-            setTimer(
-                (minutes > 9 ? minutes : '0' + minutes) + ':'
-                + (seconds > 9 ? seconds : '0' + seconds)
-            )
-        }
-    }
+  const unixToMinSec = () => {
 
-    const clearTimer = (e) => {
+    const totalSeconds = Math.ceil(startSeconds - (stopwatch.getElapsedRunningTime() / 1000))
+    const seconds = Math.floor(totalSeconds % 60)
+    const minutes = Math.floor(totalSeconds / 60)
 
-        // If you adjust it you should also need to
-        // adjust the Endtime formula we are about
-        if(pauseTimer == true)
-        {
-            setPauseTimer(false)
-        }
-        if (Ref.current) clearInterval(Ref.current);
-        const id = setInterval(() => {
-            //this is never not false 
-            startTimer(e);
+    return { minutes, seconds }
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      
+      const { minutes, seconds } = unixToMinSec();
+      setMinSec([minutes, seconds])
+     
+      if(minutes == 0 && seconds == 0)
+      {
+        stopwatch.stop()
+      }
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
 
 
-        }, 1000)
-        Ref.current = id;
-    }
+  return (
+    <div className='timer'>
 
-    const getDeadTime = () => {
-        let deadline = new Date();
-
-        // This is where you need to adjust if 
-        // you entend to add more time
-        deadline.setSeconds(deadline.getSeconds() + addTime);
-        return deadline;
-    }
+      <div className='timer-txt'>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</div>
+      <div className='timer-btns'>
 
 
-    const onClickReset = () => {
-        clearTimer(getDeadTime());
-    }
-    
-    const buttonStart = () =>
-    {
-        let deadline = new Date();
-        deadline.setSeconds(deadline.getSeconds() + original);
-        clearTimer(deadline);
-    }
+        <button onClick={() => startTimer()}>{stopwatch.isStarted() ?
+          `RESET`
+          : `START`}</button>
+        
+         <button onClick={() => pauseHandler()}>{stopwatch.isRunning() ?
+              `PAUSE`
+              : `PLAY`}</button>
+          
+      
+      </div>
 
-
-
-    const changeTimer = (e) => {
-        let seconds = Number(e.target.value.slice(3))
-        let minutes = Number(e.target.value.slice(0, 2))
-        let newTime = (minutes * 60) + seconds
-
-        setTimer(e.target.value)
-        setAddTime(newTime)
-    }
-
-    const blurHandler = () => {
-        // check input regex 00:00 format 
-        const regex = /[0-9][0-9]:[0-9][0-9]/
-        if (regex.test(timer)) {
-            setShowInput(false)
-        } else {
-            console.log("invalid input for timer format is : 00:00")
-        }
-    }
-
-    const pauseHandler = () => {
-        //want to make so u dont pause interval you just clear current interval
-        // and then start a new interval when timer is unpaused 
-
-        clearInterval(Ref.current)
-
-        let seconds = Number(timer.slice(3))
-        let minutes = Number(timer.slice(0, 2))
-        let newTime = (minutes * 60) + seconds
-
-        setAddTime(newTime)
-
-
-        setPauseTimer(!pauseTimer)
-    }
-
-
-    return (
-
-        <div className='timer-container'>
-            <div className='timer-flex'>
-                {showInput ? (
-                    <input autoFocus type="text" onBlur={blurHandler} onChange={(e) => changeTimer(e)} name="description" />
-                ) : (
-                    <div onDoubleClick={() => setShowInput(true)} className='timer'>
-                        <h2>{timer}</h2>
-                    </div >
-                )}
-                <div className='timerbtn-flex'>
-
-                    {pauseTimer ? (
-                        <button onClick={onClickReset}>
-                            <Play />
-                        </button>
-                    ) : (
-                        <button onClick={pauseHandler} className='pause-btn'>
-                            <Pause />
-                        </button>
-                    )}
-
-                    <button className='done-btn' onClick={buttonStart}><Check /></button>
-                </div>
-            </div>
-        </div >
-
-    )
-}
+    </div>
+  );
+};
