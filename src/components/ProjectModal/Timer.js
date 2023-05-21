@@ -42,7 +42,7 @@ export const Timer = () => {
   }, [])
 
 
-  return (
+  return ReactDOM.createPortal(
     <div className='timer'>
 
       <div className='timer-txt'>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</div>
@@ -60,6 +60,7 @@ export const Timer = () => {
       
       </div>
 
-    </div>
+    </div>,
+    document.getElementById('timer-portal')
   );
 };

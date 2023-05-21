@@ -18,7 +18,16 @@ function App() {
           <Route path="projects" element={<ProjectSection />} />
           <Route path="add-project" element={<AddProject />} />
           <Route path="projects/:id" element={<ProjectModal />} />
-          <Route path="projects/:id/timer" element={<Timer />} />
+          <Route
+                    path={`/timer:index`}
+                    render={() => {
+                      return (
+                        <Timer onClick={() => {
+                          this.props.history.push(this.props.match.url);
+                        }} />
+                      )
+                    }}
+                    />
         </Routes>
       </BrowserRouter>
     </div>

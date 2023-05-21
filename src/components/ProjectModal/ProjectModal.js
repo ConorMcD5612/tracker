@@ -32,12 +32,11 @@ export const ProjectModal = ({ closeModal, ...props }) => {
     return str
   }
 
-
   return (
     <div className="projectModal-container">
       <div className='project-info'>
         <h1>{capitlize(params.id)}</h1>
-
+  
         <div className='hours'>
           <h2>Today: 5hr</h2>
           <h2>Week: 10hr</h2>

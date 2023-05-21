@@ -5,6 +5,9 @@ import { CompleteBtn } from './CompleteBtn'
 import { ChevronDown } from 'react-feather'
 import { TimerBtn } from './TimerBtn'
 import { TaskDescription } from './TaskDescription'
+import { Timer } from './Timer'
+
+import { Route, Link, Routes } from "react-router-dom"
 
 
 export const Tasks = ({ tasks, setTasks }) => {
@@ -18,7 +21,7 @@ export const Tasks = ({ tasks, setTasks }) => {
     5: "E76F51",
   }
 
-
+ 
 
 
 
@@ -35,7 +38,11 @@ export const Tasks = ({ tasks, setTasks }) => {
                   {/* If the next task exists and its tier is greater than the the current tasks tier render nothing, otherwise render completebtn */}
                   {tasks[index + 1]?.tier > task.tier ? null : (
                   <>
+                  <Link to={`${this.props.match.url}/timer${index}`}>
                   <TimerBtn />
+                  </Link>
+
+                
                   <CompleteBtn task={task} tasks={tasks} setTasks={setTasks} />
                   </>
                   )}
