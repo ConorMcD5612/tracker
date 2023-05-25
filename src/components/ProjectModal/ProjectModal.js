@@ -2,9 +2,9 @@ import React from 'react'
 
 
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router'
+import { useParams, Outlet} from 'react-router'
 import { Tasks } from './Tasks'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { ArrowLeft, Settings } from 'react-feather'
 
 
@@ -13,6 +13,9 @@ export const ProjectModal = ({ closeModal, ...props }) => {
   const [tasks, setTasks] = useState([])
 
   const params = useParams()
+
+  const location = useLocation();
+  
 
 
   useEffect(() => {
@@ -59,7 +62,7 @@ export const ProjectModal = ({ closeModal, ...props }) => {
       <div className='tasks-container'>
         <Tasks tasks={tasks} setTasks={setTasks} />
       </div>
-
+   
 
 
     </div>

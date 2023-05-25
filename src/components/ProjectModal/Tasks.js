@@ -6,8 +6,9 @@ import { ChevronDown } from 'react-feather'
 import { TimerBtn } from './TimerBtn'
 import { TaskDescription } from './TaskDescription'
 import { Timer } from './Timer'
+import { Outlet, useLocation } from 'react-router-dom'
 
-import { Route, Link, Routes } from "react-router-dom"
+import { Route, Link, Routes, useParams } from "react-router-dom"
 
 
 export const Tasks = ({ tasks, setTasks }) => {
@@ -21,6 +22,8 @@ export const Tasks = ({ tasks, setTasks }) => {
     5: "E76F51",
   }
 
+  const location = useLocation();
+ 
  
 
 
@@ -38,11 +41,12 @@ export const Tasks = ({ tasks, setTasks }) => {
                   {/* If the next task exists and its tier is greater than the the current tasks tier render nothing, otherwise render completebtn */}
                   {tasks[index + 1]?.tier > task.tier ? null : (
                   <>
-                  <Link to={`${this.props.match.url}/timer${index}`}>
+                  <Link to="/timer" state={{background: location}}>
                   <TimerBtn />
+              
                   </Link>
 
-                
+                <Outlet />
                   <CompleteBtn task={task} tasks={tasks} setTasks={setTasks} />
                   </>
                   )}
@@ -56,10 +60,13 @@ export const Tasks = ({ tasks, setTasks }) => {
               <div className="color" style={{ backgroundColor: `#${tierColors[task.tier]}`, marginLeft: `${task.tier == 1 ? null : task.tier}vw` }}>
 
               </div>
+             
             </div>
+            
           </>
         )
       })}
+    
       <AddTaskBtn type="new" tasks={tasks} setTasks={setTasks} />
     </>
   )
