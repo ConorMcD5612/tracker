@@ -5,7 +5,8 @@ import { useStopwatch } from "react-use-precision-timer";
 export const Timer = () => {
   const stopwatch = useStopwatch();
   const [[minutes, seconds], setMinSec] = useState([0, 0])
-  const [startSeconds, setStartSeconds] = useState(10)
+  const [startSeconds, setStartSeconds] = useState(60 * 40)
+  const [showInput, setShowInput] = useState(false)
 
 
   const startTimer = () => {
@@ -14,7 +15,7 @@ export const Timer = () => {
 
   const pauseHandler = () => {
     stopwatch.isPaused() ? stopwatch.resume() : stopwatch.pause()
-  
+
   }
 
   const unixToMinSec = () => {
@@ -28,36 +29,60 @@ export const Timer = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      
+
       const { minutes, seconds } = unixToMinSec();
       setMinSec([minutes, seconds])
-     
-      if(minutes == 0 && seconds == 0)
-      {
+      console.log(minutes, seconds)
+      console.log()
+
+      if (minutes == 0 && seconds == 0) {
         stopwatch.stop()
       }
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [startSeconds])
+
+  useEffect(() => {
+   
+  })
+
+  const recordTime = async () => {
+    const totalSeconds = Math.ceil(startSeconds - (stopwatch.getElapsedRunningTime() / 1000))
+   
+    await fetch(`http://localhost:5000/timer/${taskDescription}`, {
+      method: "POST",
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(totalSeconds) //have to make it an object for some reason??
+  })
+  }
 
 
   return (
     <div className='timer'>
 
-      <div className='timer-txt'>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</div>
+      <div className='timer-txt'>
+        {showInput ?
+          <input autoFocus type='number' onBlur={() => setShowInput(false)} onChange={(e) => setStartSeconds(e.target.value * 60)} name="minutes" /> :
+          <span onDoubleClick={()=> setShowInput(true)}>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</span>
+        }
+
+
+      </div>
       <div className='timer-btns'>
 
 
         <button onClick={() => startTimer()}>{stopwatch.isStarted() ?
           `RESET`
           : `START`}</button>
-        
-         <button onClick={() => pauseHandler()}>{stopwatch.isRunning() ?
-              `PAUSE`
-              : `PLAY`}</button>
-          
-      
+
+        <button onClick={() => pauseHandler()}>{stopwatch.isRunning() ?
+          `PAUSE`
+          : `PLAY`}</button>
+
+
       </div>
 
     </div>

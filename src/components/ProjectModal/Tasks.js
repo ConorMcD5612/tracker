@@ -41,9 +41,8 @@ export const Tasks = ({ tasks, setTasks }) => {
                   {/* If the next task exists and its tier is greater than the the current tasks tier render nothing, otherwise render completebtn */}
                   {tasks[index + 1]?.tier > task.tier ? null : (
                   <>
-                  <Link to="/timer" state={{background: location}}>
+                  <Link to={`timer`} state={{background: location}}>
                   <TimerBtn />
-              
                   </Link>
 
                 <Outlet />
@@ -58,7 +57,6 @@ export const Tasks = ({ tasks, setTasks }) => {
                 </div>
               </div>
               <div className="color" style={{ backgroundColor: `#${tierColors[task.tier]}`, marginLeft: `${task.tier == 1 ? null : task.tier}vw` }}>
-
               </div>
              
             </div>

@@ -14,7 +14,7 @@ export const ProjectModal = ({ closeModal, ...props }) => {
 
   const params = useParams()
 
-  const location = useLocation();
+
   
 
 
