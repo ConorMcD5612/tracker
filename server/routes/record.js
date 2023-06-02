@@ -57,22 +57,26 @@ recordRoutes.route("/projects/:id").post(function (req, response) {
   let db_connect = dbo.getDb();
   let myquery = { name: req.params.id };
 
+  
+
   let newValues = {
     $push: {
-      "tasks": { description: req.body.description, tier: req.body.tier }
+      "tasks": { description: req.body.description, tier: req.body.tier, seconds: 0, id: req.body.id}
     }
   };
 
-  if (req.body.prevTaskIndex) {
-    console.log(req.body.prevTaskIndex)
+  if (req.body.tier !== 1) {
+   
     newValues = {
       $push: {
         "tasks": {
           $each: [{
             description: req.body.description,
-            tier: req.body.tier
+            tier: req.body.tier,
+            id: req.body.id,
+            seconds: 0
           }],
-          $position: req.body.prevTaskIndex + 1
+          $position: req.body.id
         }
       }
     };
@@ -147,8 +151,40 @@ recordRoutes.route("/edit-task/:id").post((req, response) => {
     })
 })
 
+//edit time on task 
+recordRoutes.route("/timer/:projectID/task/:taskID").post((req, response) => {
+  let db_connect = dbo.getDb();
 
-// This section will help you delete a record
+
+  let secondsElapsed = req.body.totalElapsedSeconds
+  console.log(secondsElapsed)
+
+
+  let projectName = req.params.projectID
+  let taskID = req.params.taskID
+  console.log(projectName, taskID)
+
+  let myQuery = { name: projectName, "tasks.id": parseFloat(taskID) }
+
+  
+  //increase by secondsElapsed 
+  let newValues = {
+    $set: {
+      "tasks.$.seconds": parseFloat(secondsElapsed)
+    }
+  }
+
+  db_connect
+    .collection("projects")
+    .updateOne(myQuery, newValues, function (err, res) {
+      if (err) throw err;
+      console.log("updated 1 task")
+      response.json(res)
+    })
+})
+
+
+// This section will help you delete a record // not using this rn
 recordRoutes.route("/:id").delete((req, response) => {
   let db_connect = dbo.getDb();
   let myquery = { _id: ObjectId(req.params.id) };

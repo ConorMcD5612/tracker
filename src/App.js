@@ -25,13 +25,13 @@ function App() {
 
         <Routes location={background || location}>
           <Route path="/projects/:id" element={<ProjectModal />} >
-            <Route path="timer" element={<Timer />} />
+            <Route path="timer/:taskID" element={<Timer />} />
           </Route>
         </Routes>
 
         {background && (
           <Routes>
-            <Route path="/projects/:id/timer" element={<Timer />} />
+            <Route path="/projects/:id/timer/task/:taskID" element={<Timer />} />
           </ Routes >
         )}
      

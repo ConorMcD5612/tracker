@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useStopwatch } from "react-use-precision-timer";
+import { useParams, useNavigate } from 'react-router';
+import { ArrowRight } from 'react-feather';
 //https://www.npmjs.com/package/react-use-precision-timer?activeTab=readme
 
 export const Timer = () => {
@@ -8,12 +10,19 @@ export const Timer = () => {
   const [startSeconds, setStartSeconds] = useState(60 * 40)
   const [showInput, setShowInput] = useState(false)
 
+  
+  const navigate = useNavigate();
+  const {taskID, id} = useParams();
 
   const startTimer = () => {
     stopwatch.start();
   }
 
   const pauseHandler = () => {
+    if(!stopwatch.isPaused())
+    {
+      recordTime();
+    }
     stopwatch.isPaused() ? stopwatch.resume() : stopwatch.pause()
 
   }
@@ -28,6 +37,7 @@ export const Timer = () => {
   }
 
   useEffect(() => {
+    console.log(taskID, id)
     const interval = setInterval(() => {
 
       const { minutes, seconds } = unixToMinSec();
@@ -43,48 +53,61 @@ export const Timer = () => {
     return () => clearInterval(interval)
   }, [startSeconds])
 
-  useEffect(() => {
-   
-  })
+  
 
   const recordTime = async () => {
-    const totalSeconds = Math.ceil(startSeconds - (stopwatch.getElapsedRunningTime() / 1000))
-   
-    await fetch(`http://localhost:5000/timer/${taskDescription}`, {
+    const totalElapsedSeconds = stopwatch.getElapsedRunningTime() / 1000
+ 
+    await fetch(`http://localhost:5000/timer/${id}/task/${taskID}`, {
       method: "POST",
       headers: {
           'Content-Type': 'application/json'
       },
-      body: JSON.stringify(totalSeconds) //have to make it an object for some reason??
+      body: JSON.stringify({totalElapsedSeconds}) //have to make it an object for some reason??
   })
   }
 
+  const closeModal = () => {
+    navigate(-1)
+    recordTime();
+  }
 
+  
   return (
+    <>
+    <div className='timer-overlay' onClick={() => closeModal()}>
+    
+    </div>
+
     <div className='timer'>
 
-      <div className='timer-txt'>
-        {showInput ?
-          <input autoFocus type='number' onBlur={() => setShowInput(false)} onChange={(e) => setStartSeconds(e.target.value * 60)} name="minutes" /> :
-          <span onDoubleClick={()=> setShowInput(true)}>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</span>
-        }
+    <div className='timer-txt'>
+      {showInput ?
+        <input autoFocus type='number' onBlur={() => setShowInput(false)} onChange={(e) => setStartSeconds(e.target.value * 60)} name="minutes" /> :
+        <span onDoubleClick={()=> setShowInput(true)}>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</span>
+      }
 
-
-      </div>
-      <div className='timer-btns'>
-
-
-        <button onClick={() => startTimer()}>{stopwatch.isStarted() ?
-          `RESET`
-          : `START`}</button>
-
-        <button onClick={() => pauseHandler()}>{stopwatch.isRunning() ?
-          `PAUSE`
-          : `PLAY`}</button>
-
-
-      </div>
 
     </div>
+    <div className='timer-btns'>
+
+
+      <button onClick={() => startTimer()}>{stopwatch.isStarted() ?
+        `RESET`
+        : `START`}</button>
+
+      <button onClick={() => pauseHandler()}>{stopwatch.isRunning() ?
+        `PAUSE`
+        : `PLAY`}</button>
+
+
+    </div>
+    
+    <ArrowRight onClick={() => closeModal()}className='back-btn' size={40}>
+
+    </ArrowRight>
+
+  </div>
+  </>
   );
 };

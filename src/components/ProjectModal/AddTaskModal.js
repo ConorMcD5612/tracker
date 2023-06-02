@@ -10,19 +10,25 @@ export const AddTaskModal = ({ setTasks, tasks, addTaskModalOpen, setAddTaskModa
     const taskInput = async (e) => {
         e.preventDefault()
         let newTask = {}
+
+        //if sub index is one more then the one this was called on 
         if (props.type == "sub") {
             newTask = {
-                prevTaskIndex: props.index,
+                id: props.index + 1,
                 tier: tasks[props.index].tier + 1,
-                description: taskDescription
+                description: taskDescription,
+               
             }
-            console.log(props.index)
+            
         }
 
         if (props.type == "new") {
             newTask = {
+                id: props.index + 1,
                 tier: 1,
-                description: taskDescription
+                description: taskDescription,
+                
+                
             }
         }
 
