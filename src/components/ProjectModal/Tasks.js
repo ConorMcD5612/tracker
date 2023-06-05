@@ -1,14 +1,12 @@
 
 import { AddTaskBtn } from './AddTaskBtn'
-import { useState } from 'react'
 import { CompleteBtn } from './CompleteBtn'
-import { ChevronDown } from 'react-feather'
-import { TimerBtn } from './TimerBtn'
+
+import { ChevronDown, Clock } from 'react-feather'
 import { TaskDescription } from './TaskDescription'
-import { Timer } from './Timer'
 import { Outlet, useLocation } from 'react-router-dom'
 
-import { Route, Link, Routes, useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 
 export const Tasks = ({ tasks, setTasks }) => {
@@ -37,12 +35,12 @@ export const Tasks = ({ tasks, setTasks }) => {
               <div style={{ transform: `translateX(${task.tier == 1 ? null : task.tier}vw)` }} className='task-text'>
                <TaskDescription task={task} tasks={tasks} setTasks={setTasks} />
                 <div>
-
+                <h2>{task.seconds}</h2>
                   {/* If the next task exists and its tier is greater than the the current tasks tier render nothing, otherwise render completebtn */}
                   {tasks[index + 1]?.tier > task.tier ? null : (
                   <>
                   <Link to={`timer/task/${index}`} state={{background: location}}>
-                  <TimerBtn />
+                  <Clock />
                   </Link>
 
                 <Outlet />

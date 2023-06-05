@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { ProjectSection } from './components/ProjectSection';
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
 import { AddProject } from "./components/AddProject";

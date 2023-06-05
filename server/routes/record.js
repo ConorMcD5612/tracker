@@ -65,6 +65,7 @@ recordRoutes.route("/projects/:id").post(function (req, response) {
     }
   };
 
+    console.log(req.body.id)
   if (req.body.tier !== 1) {
    
     newValues = {
@@ -169,7 +170,7 @@ recordRoutes.route("/timer/:projectID/task/:taskID").post((req, response) => {
   
   //increase by secondsElapsed 
   let newValues = {
-    $set: {
+    $inc: {
       "tasks.$.seconds": parseFloat(secondsElapsed)
     }
   }

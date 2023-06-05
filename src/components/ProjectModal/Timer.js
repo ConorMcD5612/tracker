@@ -10,21 +10,17 @@ export const Timer = () => {
   const [startSeconds, setStartSeconds] = useState(60 * 40)
   const [showInput, setShowInput] = useState(false)
 
-  
+
   const navigate = useNavigate();
-  const {taskID, id} = useParams();
+  const { taskID, id } = useParams();
 
   const startTimer = () => {
+    recordTime();
     stopwatch.start();
   }
 
   const pauseHandler = () => {
-    if(!stopwatch.isPaused())
-    {
-      recordTime();
-    }
     stopwatch.isPaused() ? stopwatch.resume() : stopwatch.pause()
-
   }
 
   const unixToMinSec = () => {
@@ -53,18 +49,18 @@ export const Timer = () => {
     return () => clearInterval(interval)
   }, [startSeconds])
 
-  
+
 
   const recordTime = async () => {
     const totalElapsedSeconds = stopwatch.getElapsedRunningTime() / 1000
- 
+
     await fetch(`http://localhost:5000/timer/${id}/task/${taskID}`, {
       method: "POST",
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({totalElapsedSeconds}) //have to make it an object for some reason??
-  })
+      body: JSON.stringify({ totalElapsedSeconds }) //have to make it an object for some reason??
+    })
   }
 
   const closeModal = () => {
@@ -72,42 +68,42 @@ export const Timer = () => {
     recordTime();
   }
 
-  
+
   return (
     <>
-    <div className='timer-overlay' onClick={() => closeModal()}>
-    
-    </div>
+      <div className='timer-overlay' onClick={() => closeModal()}>
 
-    <div className='timer'>
+      </div>
 
-    <div className='timer-txt'>
-      {showInput ?
-        <input autoFocus type='number' onBlur={() => setShowInput(false)} onChange={(e) => setStartSeconds(e.target.value * 60)} name="minutes" /> :
-        <span onDoubleClick={()=> setShowInput(true)}>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</span>
-      }
+      <div className='timer'>
 
-
-    </div>
-    <div className='timer-btns'>
+        <div className='timer-txt'>
+          {showInput ?
+            <input autoFocus type='number' onBlur={() => setShowInput(false)} onChange={(e) => setStartSeconds(e.target.value * 60)} name="minutes" /> :
+            <span onDoubleClick={() => setShowInput(true)}>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</span>
+          }
 
 
-      <button onClick={() => startTimer()}>{stopwatch.isStarted() ?
-        `RESET`
-        : `START`}</button>
-
-      <button onClick={() => pauseHandler()}>{stopwatch.isRunning() ?
-        `PAUSE`
-        : `PLAY`}</button>
+        </div>
+        <div className='timer-btns'>
 
 
-    </div>
-    
-    <ArrowRight onClick={() => closeModal()}className='back-btn' size={40}>
+          <button onClick={() => startTimer()}>{stopwatch.isStarted() ?
+            `RESET`
+            : `START`}</button>
 
-    </ArrowRight>
+          <button onClick={() => pauseHandler()}>{stopwatch.isRunning() ?
+            `PAUSE`
+            : `PLAY`}</button>
 
-  </div>
-  </>
+
+        </div>
+
+        <ArrowRight onClick={() => closeModal()} className='back-btn' size={40}>
+
+        </ArrowRight>
+
+      </div>
+    </>
   );
 };

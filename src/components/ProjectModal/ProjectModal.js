@@ -26,6 +26,7 @@ export const ProjectModal = ({ closeModal, ...props }) => {
         setTasks(data.tasks)
       })
     console.log("fetched")
+    console.log(tasks)
   }, [tasks.length])
 
   const capitlize = (text) => {

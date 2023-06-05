@@ -21,14 +21,13 @@ export const AddTaskModal = ({ setTasks, tasks, addTaskModalOpen, setAddTaskModa
             }
             
         }
-
+        console.log("before if ")
         if (props.type == "new") {
+            console.log(props.index)
             newTask = {
-                id: props.index + 1,
+                id: tasks.length,
                 tier: 1,
                 description: taskDescription,
-                
-                
             }
         }
 
