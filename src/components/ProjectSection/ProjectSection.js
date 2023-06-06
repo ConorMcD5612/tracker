@@ -3,6 +3,7 @@ import { Project } from './Project'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Plus } from 'react-feather'
+import './projectStyles.scss'
 
 export const ProjectSection = () => {
 
@@ -21,23 +22,28 @@ export const ProjectSection = () => {
     return (
         <div className='project-container'>
             <div className='project-section'>
-                <header className='card-header'>
+                <header className='project-header'>
                     <h1>Projects:</h1>
                 </header>
-                <div className='card-body'>
+             
                     <div className="list-group">
                         {projects?.map((project, index) => (
                             <Project key={index} name={project.name} hours={project.hours} />
                         ))}
 
-                        <h4>Add Project</h4>
+
+                        <div className='add-project-btn'>
                         <Link to="/add-project">
-                            <a>
-                                <Plus />
-                            </a>
+                                <Plus color='#24e2e8df' />
                         </Link>
+                        </div>
                     </div>
-                </div>
+                    
+                  
+                   
+                                
+              
+             
             </div>
 
             <div className='stats'>

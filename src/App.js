@@ -1,7 +1,7 @@
 import './App.scss';
-import { ProjectSection } from './components/ProjectSection';
+import { ProjectSection } from './components/ProjectSection/ProjectSection';
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
-import { AddProject } from "./components/AddProject";
+import { AddProject } from "./components/ProjectSection/AddProject";
 import { ProjectModal } from "./components/ProjectModal/ProjectModal"
 import { Timer } from "./components/ProjectModal/Timer"
 

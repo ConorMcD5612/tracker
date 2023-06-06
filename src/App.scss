@@ -105,22 +105,9 @@ button::hover {
   width: 71vw;
 }
 
-.project-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: flex;
-  width: 80vw;
-  height: 50vh;
-  transform: translate(-50%,-50%);
 
- 
-}
 
-.project-section {
-  width: 30%;
-  overflow-y: scroll;
-}
+
 
 .stats {
   display: flex;
@@ -129,11 +116,7 @@ button::hover {
  width: 70%;
 }
 
-.project-flex {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
 
-}
 
 .addProject-btn{
   justify-self: end;

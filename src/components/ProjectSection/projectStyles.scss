@@ -1,0 +1,89 @@
+//dark theme black
+$primary-color: #181818;
+$secondary-color: #212121;
+$tertiary-color: #3D3D3D;
+$highlight-blue: #24e2e8df;
+
+
+
+@mixin box() {
+    border-radius: .2vw;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border: .15vw solid $secondary-color;
+
+}
+
+
+
+.project-container {
+    background-color: $secondary-color;
+
+    @include box;
+    padding: 1vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    width: 80vw;
+    height: 50vh;
+    transform: translate(-50%, -50%);
+
+
+    .project-header {
+        background-color: $tertiary-color;
+        @include box;
+        padding: .5vw;
+
+    }
+
+    .project-section {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+
+
+    }
+
+    .project-flex {
+        background-color: $tertiary-color;
+        padding: .5vw;
+        border: .1vw solid $secondary-color;
+        border-radius: .2vw;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+
+        place-items: start;
+
+    }
+
+    .list-group {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .add-flex {
+        display: flex;
+        justify-content: space-between;
+        padding: .5vw;
+        background-color: $tertiary-color;
+        @include box;
+    }
+
+    .add-project-btn {
+        display: flex;
+        justify-content: center;
+        border: .2vw dotted $highlight-blue;
+        border-radius: .1vw;
+        padding: .5vw;
+        
+    }
+
+  
+
+    .project-link {
+        justify-self: end;
+    }
+
+}
