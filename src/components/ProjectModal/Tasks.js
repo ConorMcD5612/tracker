@@ -31,7 +31,7 @@ export const Tasks = ({ tasks, setTasks }) => {
       {tasks?.map((task, index) => {
         return (
           <>
-            <div className='task' style={{ width: `${task.tier == 1 ? 71 : 71 - task.tier}vw` }}>
+            <div className='task' >
               <div style={{ transform: `translateX(${task.tier == 1 ? null : task.tier}vw)` }} className='task-text'>
                <TaskDescription task={task} tasks={tasks} setTasks={setTasks} />
                 <div>

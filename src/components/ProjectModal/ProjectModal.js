@@ -6,6 +6,7 @@ import { useParams, Outlet} from 'react-router'
 import { Tasks } from './Tasks'
 import { Link, useLocation } from 'react-router-dom'
 import { ArrowLeft, Settings } from 'react-feather'
+import './taskStyles.scss'
 
 
 export const ProjectModal = ({ closeModal, ...props }) => {
@@ -37,30 +38,38 @@ export const ProjectModal = ({ closeModal, ...props }) => {
   }
 
   return (
-    <div className="projectModal-container">
+    <div className="task-page-container">
       <div className='project-info'>
+        <header>
         <h1>{capitlize(params.id)}</h1>
+        </header>
   
         <div className='hours'>
-          <h2>Today: 5hr</h2>
-          <h2>Week: 10hr</h2>
-          <h2>Total: 500hr </h2>
+          <h1>Hours spent:</h1>
+          <h3><span>Today:</span> 5 hours</h3>
+          <h3><span>Week:</span> 10 hours</h3>
+          <h2><span>Total:</span> 500 hours </h2>
         </div>
 
         <p className='project-description'>
+          <h1>Description:</h1>
           is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
         </p>
-        <div className='buttons'>
+        <div className='project-info-buttons'>
 
 
           <Link to="/projects">
-            <ArrowLeft />
+            <ArrowLeft color='#24e2e8df' size={32}/>
           </Link>
-          <Settings />
+          <Settings color='#24e2e8df' size={32} />
         </div>
       </div>
 
       <div className='tasks-container'>
+        <div className='current-task'>
+          <h1>Current: </h1>
+          <h2>go to grocery store otherwise</h2>
+        </div>
         <Tasks tasks={tasks} setTasks={setTasks} />
       </div>
    

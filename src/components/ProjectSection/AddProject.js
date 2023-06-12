@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router'
 export const AddProject = ({ projects, setProjects }) => {
   const navigate = useNavigate()
   const [form, setForm] = useState({
-    hours: 0,
+    description: "",
     name: "",
   })
 
@@ -38,16 +38,18 @@ export const AddProject = ({ projects, setProjects }) => {
   }
 
   return (
-    <div className='add-project'>
+    <div className='project-modal'>
+      <header>
+        <h2>Create Project</h2>
+      </header>
       <form onSubmit={(e) => submitHandler(e)}>
         <h2>Name</h2>
         <input type="text" onChange={e => updateForm({ name: e.target.value })} />
-        <h2>Due</h2>
-        <input type="date" onChange={e => updateForm({ hours: e.target.value })} />
+        
         <h2>Description</h2>
         <textarea ></textarea>
         
-        <button type="submit" >Create Project</button>
+        <button type="submit" >Create</button>
       </form>
     </div>
   )
