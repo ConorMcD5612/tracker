@@ -21,7 +21,7 @@ export const CompleteBtn = ({ task, tasks, setTasks }) => {
     return (
         <button onClick={() => completeTask()} className='complete-btn'>
             <div >
-              <Check />
+              <Check color='#24e2e8df' />
               
             </div>
         </button>

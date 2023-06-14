@@ -85,7 +85,27 @@
                 color: $highlight-blue;
             }
         }
+        
+
+        .task {
+            @include box;
+            display: flex;
+            color: $secondary-text;
+        }
+
+        .task-text {
+            width: 70%;
+          
+        }
+
+        .task-buttons {
+            display: flex;
+            width: 30%;
+        }
+
+     
     }
 
+    
 
 }
