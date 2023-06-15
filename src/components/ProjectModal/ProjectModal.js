@@ -67,8 +67,7 @@ export const ProjectModal = ({ closeModal, ...props }) => {
 
       <div className='tasks-container'>
         <div className='current-task'>
-          <h1>Current: </h1>
-          <h2>go to grocery store otherwise</h2>
+          <h2><span>Current: </span>go to grocery store otherwise</h2>
         </div>
         <Tasks tasks={tasks} setTasks={setTasks} />
       </div>

@@ -32,10 +32,9 @@ export const Tasks = ({ tasks, setTasks }) => {
         return (
           <>
             <div className='task' >
-              <div className='task-text'>
-             <h2 className='task-seconds'>{task.seconds}</h2>
-                <TaskDescription task={task} tasks={tasks} setTasks={setTasks} />
-              </div>
+           
+              <TaskDescription task={task} tasks={tasks} setTasks={setTasks} />
+         
               <div className='task-buttons'>
          
 

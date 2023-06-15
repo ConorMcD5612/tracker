@@ -37,8 +37,10 @@ export const TaskDescription = ({ task, tasks, setTasks }) => {
                 </form>
                 :
                 (
-                    <span onDoubleClick={() => setShowInput(true)} className='task-description'>
-                        <h2>{taskDescription}</h2>
+                    <span onDoubleClick={() => setShowInput(true)} className='task-text'>
+                      
+                        <h2 className='task-description'><span>Task: </span>{taskDescription}</h2>
+                        <h2 className='task-seconds'><span>Hours: </span>{task.seconds.toFixed(1)}</h2>
                     </span>
                 )
             }

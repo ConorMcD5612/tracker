@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useStopwatch } from "react-use-precision-timer";
 import { useParams, useNavigate } from 'react-router';
-import { ArrowRight } from 'react-feather';
+import { ArrowLeft } from 'react-feather';
 //https://www.npmjs.com/package/react-use-precision-timer?activeTab=readme
 
 export const Timer = () => {
@@ -70,21 +70,20 @@ export const Timer = () => {
 
 
   return (
-    <>
+    <div className='timer-container'>
       <div className='timer-overlay' onClick={() => closeModal()}>
 
       </div>
 
       <div className='timer'>
-
-        <div className='timer-txt'>
+        <div className='timer-flex'>
+      
           {showInput ?
             <input autoFocus type='number' onBlur={() => setShowInput(false)} onChange={(e) => setStartSeconds(e.target.value * 60)} name="minutes" /> :
-            <span onDoubleClick={() => setShowInput(true)}>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</span>
+            <span className='timer-text' onDoubleClick={() => setShowInput(true)}>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</span>
           }
 
-
-        </div>
+   
         <div className='timer-btns'>
 
 
@@ -98,12 +97,12 @@ export const Timer = () => {
 
 
         </div>
+        </div>
+      
 
-        <ArrowRight onClick={() => closeModal()} className='back-btn' size={40}>
-
-        </ArrowRight>
+        <ArrowLeft onClick={() => closeModal()} className='back-btn' color='#24e2e8df' size={'2.5vw'} />
 
       </div>
-    </>
+    </div>
   );
 };

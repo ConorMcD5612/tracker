@@ -10,12 +10,9 @@ export const AddTaskBtn = ({ tasks, setTasks, ...props }) => {
 
   return (
     <>
-      <button className="addTask-btn btn btn-sm btn-success" onClick={() => setAddTaskModalOpen(true)} >
-        <div className='add-flex d-flex align-items-center '>
-          <Plus color='#24e2e8df' />
-        </div>
+      <button className="add-task-button" onClick={() => setAddTaskModalOpen(true)} >
+        <Plus color='#24e2e8df' />
       </button>
-
 
       <AddTaskModal type={props.type} index={props.index} addTaskModalOpen={addTaskModalOpen} setAddTaskModalOpen={setAddTaskModalOpen} tasks={tasks} setTasks={setTasks} />
     </>
