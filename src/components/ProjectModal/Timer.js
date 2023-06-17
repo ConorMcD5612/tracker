@@ -77,28 +77,28 @@ export const Timer = () => {
 
       <div className='timer'>
         <div className='timer-flex'>
-      
+
           {showInput ?
             <input autoFocus type='number' onBlur={() => setShowInput(false)} onChange={(e) => setStartSeconds(e.target.value * 60)} name="minutes" /> :
             <span className='timer-text' onDoubleClick={() => setShowInput(true)}>{`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}</span>
           }
 
-   
-        <div className='timer-btns'>
+
+          <div className='timer-btns'>
 
 
-          <button onClick={() => startTimer()}>{stopwatch.isStarted() ?
-            `RESET`
-            : `START`}</button>
+            <button onClick={() => startTimer()}>{stopwatch.isStarted() ?
+              `RESET`
+              : `START`}</button>
 
-          <button onClick={() => pauseHandler()}>{stopwatch.isRunning() ?
-            `PAUSE`
-            : `PLAY`}</button>
+            <button onClick={() => pauseHandler()}>{stopwatch.isRunning() ?
+              `PAUSE`
+              : `PLAY`}</button>
 
 
+          </div>
         </div>
-        </div>
-      
+
 
         <ArrowLeft onClick={() => closeModal()} className='back-btn' color='#24e2e8df' size={'2.5vw'} />
 

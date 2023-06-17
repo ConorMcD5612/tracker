@@ -14,8 +14,6 @@ export const ProjectModal = ({ closeModal, ...props }) => {
   const [tasks, setTasks] = useState([])
 
   const params = useParams()
-
-
   
 
 
@@ -26,14 +24,11 @@ export const ProjectModal = ({ closeModal, ...props }) => {
       .then((data) => {
         setTasks(data.tasks)
       })
-    console.log("fetched")
-    console.log(tasks)
+    
   }, [tasks.length])
 
   const capitlize = (text) => {
     const str = text.charAt(0).toUpperCase() + text.slice(1)
-    console.log(str)
-
     return str
   }
 

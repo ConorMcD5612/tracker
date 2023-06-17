@@ -1,16 +1,21 @@
 
-import { AddTaskBtn } from './AddTaskBtn'
+import { AddRegularTask } from './AddRegularTask'
 import { CompleteBtn } from './CompleteBtn'
 
 import { ChevronDown, Clock } from 'react-feather'
 import { TaskDescription } from './TaskDescription'
 import { Outlet, useLocation } from 'react-router-dom'
+import { AddSubTask } from './AddSubTask'
+import { Plus } from 'react-feather'
+
 
 import { Link } from "react-router-dom"
+import { useState, useEffect } from 'react'
 
 
 export const Tasks = ({ tasks, setTasks }) => {
-
+  
+  const [subId, setSubId] = useState(-1)
 
   let tierColors = {
     1: "264653",
@@ -22,7 +27,7 @@ export const Tasks = ({ tasks, setTasks }) => {
 
   const location = useLocation();
 
-
+ 
 
 
 
@@ -32,11 +37,11 @@ export const Tasks = ({ tasks, setTasks }) => {
         return (
           <>
             <div className='task' >
-           
+
               <TaskDescription task={task} tasks={tasks} setTasks={setTasks} />
-         
+
               <div className='task-buttons'>
-         
+
 
                 {/* If the next task exists and its tier is greater than the the current tasks tier render nothing, otherwise render completebtn */}
                 {tasks[index + 1]?.tier > task.tier ? null : (
@@ -48,17 +53,21 @@ export const Tasks = ({ tasks, setTasks }) => {
                   </>
                 )}
 
-                <AddTaskBtn type="sub" task={task} index={index} setTasks={setTasks} tasks={tasks} />
+                <Plus onClick={() => setSubId(task.id)} color='#24e2e8df' />
                 <ChevronDown color='#24e2e8df' />
+                
               </div>
+                  
 
             </div>
+            <AddSubTask type="sub" task={task} index={index} setTasks={setTasks} tasks={tasks} setSubId={setSubId} subId={subId} />
+         
             <Outlet />
           </>
         )
       })}
 
-      <AddTaskBtn type="new" tasks={tasks} setTasks={setTasks} />
+      <AddRegularTask type="new" tasks={tasks} setTasks={setTasks} />
     </>
   )
 }
