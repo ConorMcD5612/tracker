@@ -15,7 +15,7 @@ import { useState, useEffect } from 'react'
 
 export const Tasks = ({ tasks, setTasks }) => {
   
-  const [subId, setSubId] = useState(-1)
+  const [openSubIndex, setOpenSubIndex] = useState(-1)
 
   let tierColors = {
     1: "264653",
@@ -27,7 +27,6 @@ export const Tasks = ({ tasks, setTasks }) => {
 
   const location = useLocation();
 
- 
 
 
 
@@ -46,21 +45,21 @@ export const Tasks = ({ tasks, setTasks }) => {
                 {/* If the next task exists and its tier is greater than the the current tasks tier render nothing, otherwise render completebtn */}
                 {tasks[index + 1]?.tier > task.tier ? null : (
                   <>
-                    <Link to={`timer/task/${index}`} state={{ background: location }}>
+                    <Link to={`timer/task/${index}`} state={{ background: location, index: index }}>
                       <Clock color='#24e2e8df' />
                     </Link>
                     <CompleteBtn task={task} tasks={tasks} setTasks={setTasks} />
                   </>
                 )}
 
-                <Plus onClick={() => setSubId(task.id)} color='#24e2e8df' />
+                <Plus onClick={() => setOpenSubIndex(index)} color='#24e2e8df' />
                 <ChevronDown color='#24e2e8df' />
                 
               </div>
                   
 
             </div>
-            <AddSubTask type="sub" task={task} index={index} setTasks={setTasks} tasks={tasks} setSubId={setSubId} subId={subId} />
+            <AddSubTask type="sub" task={task} index={index} setTasks={setTasks} tasks={tasks} setOpenSubIndex={setOpenSubIndex} openSubIndex={openSubIndex} />
          
             <Outlet />
           </>

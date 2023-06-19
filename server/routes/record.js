@@ -57,11 +57,15 @@ recordRoutes.route("/projects/:id").post(function (req, response) {
   let db_connect = dbo.getDb();
   let myquery = { name: req.params.id };
 
-  
+  //make this better by just chanbging tier / adding tier to object 
 
   let newValues = {
     $push: {
-      "tasks": { description: req.body.description, tier: req.body.tier, seconds: 0, id: req.body.id}
+      "tasks": { 
+        description: req.body.description, 
+        tier: req.body.tier, 
+        seconds: 0, 
+      }
     }
   };
 
@@ -74,7 +78,6 @@ recordRoutes.route("/projects/:id").post(function (req, response) {
           $each: [{
             description: req.body.description,
             tier: req.body.tier,
-            id: req.body.id,
             seconds: 0
           }],
           $position: req.body.id
@@ -153,7 +156,7 @@ recordRoutes.route("/edit-task/:id").post((req, response) => {
 })
 
 //edit time on task 
-recordRoutes.route("/timer/:projectID/task/:taskID").post((req, response) => {
+recordRoutes.route("/timer/:projectName/task/:taskIndex").post((req, response) => {
   let db_connect = dbo.getDb();
 
 
@@ -161,20 +164,25 @@ recordRoutes.route("/timer/:projectID/task/:taskID").post((req, response) => {
   console.log(secondsElapsed)
 
 
-  let projectName = req.params.projectID
-  let taskID = req.params.taskID
-  console.log(projectName, taskID)
+  let projectName = req.params.projectName
+  let index = parseInt(req.params.taskIndex)
+  console.log(index)
 
-  let myQuery = { name: projectName, "tasks.id": parseFloat(taskID) }
+
+  let myQuery = { name: projectName }
 
   
   //increase by secondsElapsed 
+
+  //doesn't look like its finding it 
   let newValues = {
     $inc: {
-      "tasks.$.seconds": parseFloat(secondsElapsed)
+      [`tasks.${index}.seconds`]: parseFloat(secondsElapsed)
     }
-  }
+  };
 
+
+  
   db_connect
     .collection("projects")
     .updateOne(myQuery, newValues, function (err, res) {

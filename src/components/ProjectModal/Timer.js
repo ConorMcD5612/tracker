@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useStopwatch } from "react-use-precision-timer";
 import { useParams, useNavigate } from 'react-router';
 import { ArrowLeft } from 'react-feather';
+import { useLocation } from 'react-router';
 //https://www.npmjs.com/package/react-use-precision-timer?activeTab=readme
 
 export const Timer = () => {
@@ -11,8 +12,10 @@ export const Timer = () => {
   const [showInput, setShowInput] = useState(false)
 
 
+
   const navigate = useNavigate();
-  const { taskID, id } = useParams();
+  const { projectName, taskIndex} = useParams();
+  
 
   const startTimer = () => {
     recordTime();
@@ -33,7 +36,7 @@ export const Timer = () => {
   }
 
   useEffect(() => {
-    console.log(taskID, id)
+    console.log(projectName, taskIndex)
     const interval = setInterval(() => {
 
       const { minutes, seconds } = unixToMinSec();
@@ -54,7 +57,7 @@ export const Timer = () => {
   const recordTime = async () => {
     const totalElapsedSeconds = stopwatch.getElapsedRunningTime() / 1000
 
-    await fetch(`http://localhost:5000/timer/${id}/task/${taskID}`, {
+    await fetch(`http://localhost:5000/timer/${projectName}/task/${taskIndex}`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'

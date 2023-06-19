@@ -31,7 +31,7 @@ function App() {
 
         {background && (
           <Routes>
-            <Route path="/projects/:id/timer/task/:taskID" element={<Timer />} />
+            <Route path="/projects/:projectName/timer/task/:taskIndex" element={<Timer />} />
           </ Routes >
         )}
      
