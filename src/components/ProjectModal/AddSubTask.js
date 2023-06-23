@@ -7,7 +7,7 @@ export const AddSubTask = ({ tasks, setTasks, openSubIndex, setOpenSubIndex, ...
 
     return (
         <div className='add-sub'>
-            {tasks[props.index] == tasks[openSubIndex] ? <AddTaskForm onClick={() => setOpenSubIndex(-1)} type={props.type} index={props.index} tasks={tasks} setTasks={setTasks} /> :
+            {tasks[props.index] == tasks[openSubIndex] ? <AddTaskForm onBlur={() => setOpenSubIndex(-1)} onClick={() => setOpenSubIndex(-1)} type={props.type} index={props.index} tasks={tasks} setTasks={setTasks} /> :
                 null
             }
         </div>

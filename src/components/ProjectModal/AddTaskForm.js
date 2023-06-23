@@ -52,8 +52,8 @@ export const AddTaskForm = ({ setTasks, tasks, ...props }) => {
 
     return (
 
-        <form className='task-form' onSubmit={(e) => taskInput(e)}>
-            <input type="text" placeholder='New task...' value={taskDescription} onChange={e => setTaskDescription(e.target.value)} />
+        <form  onBlur={() => props.onClick()} className='task-form' onSubmit={(e) => taskInput(e)}>
+            <input autoFocus type="text" placeholder='New task...' value={taskDescription} onChange={e => setTaskDescription(e.target.value)} />
             <button type="submit" >Create</button>
         </form>
 
