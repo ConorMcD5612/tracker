@@ -7,6 +7,7 @@ import { TaskDescription } from './TaskDescription'
 import { Outlet, useLocation } from 'react-router-dom'
 import { AddSubTask } from './AddSubTask'
 import { Plus } from 'react-feather'
+import {React} from 'react'
 
 
 import { Link } from "react-router-dom"
@@ -15,7 +16,8 @@ import { useState, useEffect } from 'react'
 
 export const Tasks = ({ tasks, setTasks }) => {
   
-  const [openSubIndex, setOpenSubIndex] = useState(-1)
+  const [openSubIndex, setOpenSubIndex] = useState(-1);
+  const [isUpdating, setIsUpdating] = useState(false)
 
   let tierColors = {
     1: "264653",
@@ -29,44 +31,54 @@ export const Tasks = ({ tasks, setTasks }) => {
 
 
 
-
   return (
     <>
-      {tasks?.map((task, index) => {
-        return (
-          <>
-            <div className='task' >
-
-              <TaskDescription task={task} tasks={tasks} setTasks={setTasks} />
-
-              <div className='task-buttons'>
-
-
-                {/* If the next task exists and its tier is greater than the the current tasks tier render nothing, otherwise render completebtn */}
-                {tasks[index + 1]?.tier > task.tier ? null : (
-                  <>
-                    <Link to={`timer/task/${index}`} state={{ background: location, index: index }}>
-                      <Clock color='#24e2e8df' />
-                    </Link>
-                    <CompleteBtn task={task} tasks={tasks} setTasks={setTasks} />
-                  </>
-                )}
-
-                <Plus onClick={() => setOpenSubIndex(index)} color='#24e2e8df' />
-                <ChevronDown color='#24e2e8df' />
-                
-              </div>
-                  
-
+      {tasks?.map((task, index) => (
+        <>
+          <div style={{ width: `${100 - task.tier * 3}%` }} className="task">
+            <TaskDescription
+              task={task}
+              tasks={tasks}
+              setTasks={setTasks}
+            />
+            <div className="task-buttons">
+              {tasks[index + 1]?.tier > task.tier ? null : (
+                <>
+                  <Link
+                    to={`timer/task/${index}`}
+                    state={{ background: location, index: index }}
+                  >
+                    <Clock color="#24e2e8df" />
+                  </Link>
+                  <CompleteBtn
+                    task={task}
+                    tasks={tasks}
+                    setTasks={setTasks}
+                  />
+                </>
+              )}
+              <Plus onClick={() => setOpenSubIndex(index)} color="#24e2e8df" />
+              <ChevronDown color="#24e2e8df" />
             </div>
-            <AddSubTask type="sub" task={task} index={index} setTasks={setTasks} tasks={tasks} setOpenSubIndex={setOpenSubIndex} openSubIndex={openSubIndex} />
-         
-            <Outlet />
-          </>
-        )
-      })}
-
-      <AddRegularTask type="new" tasks={tasks} setTasks={setTasks} />
+          </div>
+          <AddSubTask
+            type="sub"
+            task={task}
+            index={index}
+            setTasks={setTasks}
+            tasks={tasks}
+            setOpenSubIndex={setOpenSubIndex}
+            openSubIndex={openSubIndex}
+          />
+          <Outlet />
+        </>
+      ))}
+      <AddRegularTask
+   
+        type="new"
+        tasks={tasks}
+        setTasks={setTasks}
+      />
     </>
-  )
-}
+  );
+};

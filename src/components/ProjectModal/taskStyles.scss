@@ -75,6 +75,7 @@
         display: flex;
         flex-direction: column;
         gap: .3vw;
+        align-items: end;
         
     
 
@@ -82,10 +83,14 @@
         .current-task {
             @include box;
             border: .15vw solid $highlight-blue;
-            display: flex;
-            align-items: center;
+            box-sizing: border-box;
            
             padding: .7vw;
+            display: flex;
+            width: 100%;
+            
+        
+            
 
             span {
                 color: $highlight-blue;
@@ -96,8 +101,12 @@
         .task {
             @include box;
             display: flex;
+            box-sizing: border-box;
             color: $secondary-text;
             padding: .6vw;
+            width: 100%;
+        
+      
         }
 
         .task-text {
@@ -124,8 +133,12 @@
         .task-form {
             @include box;
             padding: .6vw;
+            box-sizing: border-box;
             border: .15vw solid $highlight-blue;
             display: flex;
+            width: 100%;
+          
+            
         
 
             button {
@@ -147,7 +160,6 @@
                outline: none;
                color: white;
                caret-color: $highlight-blue;
-               justify-self: end;
             }
         }
 
@@ -157,17 +169,17 @@
             padding: .6vw;
         }
 
-
-       
-
-
-
+        .add-sub {
+            width: 100%;
+        }
 
     }
 
 
 
 }
+
+
 
 
 .timer {

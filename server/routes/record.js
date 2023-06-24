@@ -70,7 +70,7 @@ recordRoutes.route("/projects/:id").post(function (req, response) {
   };
 
     console.log(req.body.id)
-  if (req.body.tier !== 1) {
+  if (req.body.tier !== 0) {
    
     newValues = {
       $push: {
