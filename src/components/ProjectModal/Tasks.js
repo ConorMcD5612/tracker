@@ -1,48 +1,32 @@
+import { AddRegularTask } from "./AddRegularTask";
+import { CompleteBtn } from "./CompleteBtn";
 
-import { AddRegularTask } from './AddRegularTask'
-import { CompleteBtn } from './CompleteBtn'
+import { ChevronDown, Clock } from "react-feather";
+import { TaskDescription } from "./TaskDescription";
+import { Outlet, useLocation } from "react-router-dom";
+import { AddSubTask } from "./AddSubTask";
+import { Plus } from "react-feather";
+import { React } from "react";
 
-import { ChevronDown, Clock } from 'react-feather'
-import { TaskDescription } from './TaskDescription'
-import { Outlet, useLocation } from 'react-router-dom'
-import { AddSubTask } from './AddSubTask'
-import { Plus } from 'react-feather'
-import {React} from 'react'
-
-
-import { Link } from "react-router-dom"
-import { useState, useEffect } from 'react'
-
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export const Tasks = ({ tasks, setTasks }) => {
-  
   const [openSubIndex, setOpenSubIndex] = useState(-1);
-  const [isUpdating, setIsUpdating] = useState(false)
-
-  let tierColors = {
-    1: "264653",
-    2: "2A9D8F",
-    3: "E9C46A",
-    4: "F4A261",
-    5: "E76F51",
-  }
 
   const location = useLocation();
-
-
 
   return (
     <>
       {tasks?.map((task, index) => (
         <>
           <div style={{ width: `${100 - task.tier * 1.5}%` }} className="task">
-            <TaskDescription
-              task={task}
-              tasks={tasks}
-              setTasks={setTasks}
-            />
-              <h2  className='task-seconds'><span>Hours: </span>{task.seconds?.toFixed(1).padStart(4, '0')}</h2>
-            <div   className="task-buttons">
+            <TaskDescription task={task} tasks={tasks} setTasks={setTasks} />
+            <h2 className="task-seconds">
+              <span>Hours: </span>
+              {task.seconds?.toFixed(1).padStart(4, "0")}
+            </h2>
+            <div className="task-buttons">
               {tasks[index + 1]?.tier > task.tier ? null : (
                 <>
                   <Link
@@ -51,17 +35,12 @@ export const Tasks = ({ tasks, setTasks }) => {
                   >
                     <Clock color="#24e2e8df" />
                   </Link>
-                  <CompleteBtn
-                    task={task}
-                    tasks={tasks}
-                    setTasks={setTasks}
-                  />
+                  <CompleteBtn task={task} tasks={tasks} setTasks={setTasks} />
                 </>
               )}
               <Plus onClick={() => setOpenSubIndex(index)} color="#24e2e8df" />
               <ChevronDown color="#24e2e8df" />
             </div>
-            
           </div>
           <AddSubTask
             type="sub"
@@ -75,12 +54,7 @@ export const Tasks = ({ tasks, setTasks }) => {
           <Outlet />
         </>
       ))}
-      <AddRegularTask
-   
-        type="new"
-        tasks={tasks}
-        setTasks={setTasks}
-      />
+      <AddRegularTask type="new" tasks={tasks} setTasks={setTasks} />
     </>
   );
 };
