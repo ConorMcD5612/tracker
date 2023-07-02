@@ -35,13 +35,14 @@ export const Tasks = ({ tasks, setTasks }) => {
     <>
       {tasks?.map((task, index) => (
         <>
-          <div style={{ width: `${100 - task.tier * 3}%` }} className="task">
+          <div style={{ width: `${100 - task.tier * 1.5}%` }} className="task">
             <TaskDescription
               task={task}
               tasks={tasks}
               setTasks={setTasks}
             />
-            <div className="task-buttons">
+              <h2  className='task-seconds'><span>Hours: </span>{task.seconds?.toFixed(1).padStart(4, '0')}</h2>
+            <div   className="task-buttons">
               {tasks[index + 1]?.tier > task.tier ? null : (
                 <>
                   <Link
@@ -60,6 +61,7 @@ export const Tasks = ({ tasks, setTasks }) => {
               <Plus onClick={() => setOpenSubIndex(index)} color="#24e2e8df" />
               <ChevronDown color="#24e2e8df" />
             </div>
+            
           </div>
           <AddSubTask
             type="sub"

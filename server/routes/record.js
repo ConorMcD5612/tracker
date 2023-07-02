@@ -27,11 +27,11 @@ recordRoutes.route("/projects").get(function (req, res) {
 // This gets document based on id so I can get task array 
 recordRoutes.route("/projects/:id").get(function (req, res) {
   let db_connect = dbo.getDb();
-  let myquery = { name: req.params.id };
-
+  let myQuery = { name: req.params.id };
+0
   db_connect
     .collection("projects")
-    .findOne(myquery, function (err, result) {
+    .findOne(myQuery, function (err, result) {
       if (err) throw err;
       res.json(result);
     });
@@ -54,30 +54,28 @@ recordRoutes.route("/projects/add").post(function (req, response) {
 
 //Goal of this is to add tasks to tasks array
 recordRoutes.route("/projects/:id").post(function (req, response) {
-  let db_connect = dbo.getDb();
-  let myquery = { name: req.params.id };
-
-  //make this better by just chanbging tier / adding tier to object 
+  const db_connect = dbo.getDb();
+  const myQuery = { name: req.params.id };
+  const { description, tier } = req.body
 
   let newValues = {
     $push: {
-      "tasks": { 
-        description: req.body.description, 
-        tier: req.body.tier, 
-        seconds: 0, 
+      "tasks": {
+        description,
+        tier,
+        seconds: 0,
       }
     }
   };
 
-    console.log(req.body.id)
-  if (req.body.tier !== 0) {
-   
+//if sub task change position to under parent task  
+  if (tier) {
     newValues = {
       $push: {
         "tasks": {
           $each: [{
-            description: req.body.description,
-            tier: req.body.tier,
+            description,
+            tier,
             seconds: 0
           }],
           $position: req.body.id
@@ -86,12 +84,11 @@ recordRoutes.route("/projects/:id").post(function (req, response) {
     };
   }
 
-  console.log(newValues)
+
   db_connect
     .collection("projects")
-    .updateOne(myquery, newValues, function (err, res) {
+    .updateOne(myQuery, newValues, function (err, res) {
       if (err) throw err;
-      console.log("1 document updated");
       response.json(res);
     });
 });
@@ -171,7 +168,7 @@ recordRoutes.route("/timer/:projectName/task/:taskIndex").post((req, response) =
 
   let myQuery = { name: projectName }
 
-  
+
   //increase by secondsElapsed 
 
   //doesn't look like its finding it 
@@ -182,7 +179,7 @@ recordRoutes.route("/timer/:projectName/task/:taskIndex").post((req, response) =
   };
 
 
-  
+
   db_connect
     .collection("projects")
     .updateOne(myQuery, newValues, function (err, res) {

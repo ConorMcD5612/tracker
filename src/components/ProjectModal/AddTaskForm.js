@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Modal from 'react-modal'
 import { useParams } from 'react-router'
 
-export const AddTaskForm = ({ setTasks, setIsUpdating, tasks, ...props }) => {
+export const AddTaskForm = ({ setTasks, tasks, ...props }) => {
     const [taskDescription, setTaskDescription] = useState("")
 
     const params = useParams()
@@ -10,14 +10,12 @@ export const AddTaskForm = ({ setTasks, setIsUpdating, tasks, ...props }) => {
     const taskInput = async (e) => {
 
         e.preventDefault()
-        setIsUpdating(true)
+  
         let newTask = {}
-        console.log(setIsUpdating)
+      
 
         //if sub index is one more then the one this was called on 
         if (props.type == "sub") {
-            console.log("subber dubber")
-            console.log(props.index + 1)
             newTask = {
                 id: props.index + 1,
                 tier: tasks[props.index].tier + 1,
@@ -48,7 +46,7 @@ export const AddTaskForm = ({ setTasks, setIsUpdating, tasks, ...props }) => {
         
         //set adding task to false
         props.onClick()
-        setIsUpdating(false)
+      
         
     }
 

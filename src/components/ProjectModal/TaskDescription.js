@@ -37,11 +37,12 @@ export const TaskDescription = ({ task, tasks, setTasks }) => {
                     <input autoFocus type="text" onBlur={() => setShowInput(false)} onChange={(e) => setTaskDescription(e.target.value)} name="description" />
                 </form>
                 :
+               
                 (
-                    <span  onDoubleClick={() => setShowInput(true)} className='task-text'>
+                    <span style={{ width: `${80 - task.tier * 1.5}%` }}  onDoubleClick={() => setShowInput(true)} className='task-text'>
                       
                         <h2 className='task-description'><span>Task: </span>{taskDescription}</h2>
-                        <h2 className='task-seconds'><span>Hours: </span>{task.seconds?.toFixed(1)}</h2>
+                      
                     </span>
                 )
             }
