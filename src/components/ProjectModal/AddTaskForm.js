@@ -11,14 +11,23 @@ export const AddTaskForm = ({ setTasks, tasks, ...props }) => {
     e.preventDefault();
 
     let newTask = {};
+    let tempArr = [...tasks];
 
-    
     if (props.type == "sub") {
       newTask = {
         id: props.index + 1,
         tier: tasks[props.index].tier + 1,
         description: taskDescription,
+        seconds: 0,
       };
+      console.log(props.index);
+
+      tempArr = tasks.splice(props.index + 1, 0, newTask);
+      console.log(tasks)
+
+      console.log(tempArr);
+
+      setTasks(tempArr);
     }
 
     if (props.type == "new") {
@@ -27,6 +36,9 @@ export const AddTaskForm = ({ setTasks, tasks, ...props }) => {
         tier: 0,
         description: taskDescription,
       };
+
+      tempArr = [...tasks, newTask];
+      setTasks(tempArr);
     }
 
     await fetch(`http://localhost:5000/projects/${params.id}`, {
@@ -37,7 +49,7 @@ export const AddTaskForm = ({ setTasks, tasks, ...props }) => {
       body: JSON.stringify(newTask),
     });
 
-    //onlclick function for addregular and addsub 
+    //onlclick function for addregular and addsub
     props.onClick();
   };
 
