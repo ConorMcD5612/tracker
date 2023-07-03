@@ -11,8 +11,7 @@ const dbo = require("../db/conn");
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require("mongodb").ObjectId;
 
-
-// Get all projects 
+// Get all projects
 recordRoutes.route("/projects").get(function (req, res) {
   let db_connect = dbo.getDb("tracker");
   db_connect
@@ -24,27 +23,24 @@ recordRoutes.route("/projects").get(function (req, res) {
     });
 });
 
-// This gets document based on id so I can get task array 
+// This gets document based on id so I can get task array
 recordRoutes.route("/projects/:id").get(function (req, res) {
   let db_connect = dbo.getDb();
   let myQuery = { name: req.params.id };
-0
-  db_connect
-    .collection("projects")
-    .findOne(myQuery, function (err, result) {
-      if (err) throw err;
-      res.json(result);
-    });
+  0;
+  db_connect.collection("projects").findOne(myQuery, function (err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
 });
 
-
-// Create new project 
+// Create new project
 recordRoutes.route("/projects/add").post(function (req, response) {
   let db_connect = dbo.getDb();
   let myobj = {
     tasks: [],
     name: req.body.name,
-    hours: req.body.hours,
+    description: req.body.description,
   };
   db_connect.collection("projects").insertOne(myobj, function (err, res) {
     if (err) throw err;
@@ -56,34 +52,35 @@ recordRoutes.route("/projects/add").post(function (req, response) {
 recordRoutes.route("/projects/:id").post(function (req, response) {
   const db_connect = dbo.getDb();
   const myQuery = { name: req.params.id };
-  const { description, tier } = req.body
+  const { description, tier } = req.body;
 
   let newValues = {
     $push: {
-      "tasks": {
+      tasks: {
         description,
         tier,
         seconds: 0,
-      }
-    }
+      },
+    },
   };
 
-//if sub task change position to under parent task  
+  //if sub task change position to under parent task
   if (tier) {
     newValues = {
       $push: {
-        "tasks": {
-          $each: [{
-            description,
-            tier,
-            seconds: 0
-          }],
-          $position: req.body.id
-        }
-      }
+        tasks: {
+          $each: [
+            {
+              description,
+              tier,
+              seconds: 0,
+            },
+          ],
+          $position: req.body.id,
+        },
+      },
     };
   }
-
 
   db_connect
     .collection("projects")
@@ -93,102 +90,95 @@ recordRoutes.route("/projects/:id").post(function (req, response) {
     });
 });
 
-// Remove a task changing the record not deleting it 
+// Remove a task changing the record not deleting it
 recordRoutes.route("/remove-task/:id").post((req, response) => {
-
-  console.log(req.body)
+  console.log(req.body);
 
   let db_connect = dbo.getDb();
 
-  let taskDescription = req.body.description
-  let projectName = req.params.id
+  let taskDescription = req.body.description;
+  let projectName = req.params.id;
 
-  let myQuery = { name: projectName }
-  console.log(`THIS IS TASK NAME:   ${taskDescription}`)
+  let myQuery = { name: projectName };
+  console.log(`THIS IS TASK NAME:   ${taskDescription}`);
   let newValues = {
     $pull: {
-      tasks: { description: taskDescription }
-    }
-  }
-
-  db_connect
-    .collection("projects")
-    .updateOne(myQuery, newValues, function (err, res) {
-      if (err) throw err;
-      console.log("deleted 1 task")
-      response.json(res)
-    })
-
-})
-
-//edit task update it in db 
-recordRoutes.route("/edit-task/:id").post((req, response) => {
-  let db_connect = dbo.getDb();
-  console.log(req.body)
-
-  let updatedDesc = req.body.updatedDescription
-  let oldDesc = req.body.oldDescription
-
-  console.log(updatedDesc, oldDesc)
-
-  let projectName = req.params.id
-
-  let myQuery = { name: projectName, "tasks.description": oldDesc }
-
-  //right now is just deletes the task?
-  //query is good 
-  let newValues = {
-    $set: {
-      "tasks.$.description": updatedDesc
-    }
-  }
-
-  db_connect
-    .collection("projects")
-    .updateOne(myQuery, newValues, function (err, res) {
-      if (err) throw err;
-      console.log("updated 1 task")
-      response.json(res)
-    })
-})
-
-//edit time on task 
-recordRoutes.route("/timer/:projectName/task/:taskIndex").post((req, response) => {
-  let db_connect = dbo.getDb();
-
-
-  let secondsElapsed = req.body.totalElapsedSeconds
-  console.log(secondsElapsed)
-
-
-  let projectName = req.params.projectName
-  let index = parseInt(req.params.taskIndex)
-  console.log(index)
-
-
-  let myQuery = { name: projectName }
-
-
-  //increase by secondsElapsed 
-
-  //doesn't look like its finding it 
-  let newValues = {
-    $inc: {
-      [`tasks.${index}.seconds`]: parseFloat(secondsElapsed)
-    }
+      tasks: { description: taskDescription },
+    },
   };
 
+  db_connect
+    .collection("projects")
+    .updateOne(myQuery, newValues, function (err, res) {
+      if (err) throw err;
+      console.log("deleted 1 task");
+      response.json(res);
+    });
+});
 
+//edit task update it in db
+recordRoutes.route("/edit-task/:id").post((req, response) => {
+  let db_connect = dbo.getDb();
+  console.log(req.body);
+
+  let updatedDesc = req.body.updatedDescription;
+  let oldDesc = req.body.oldDescription;
+
+  console.log(updatedDesc, oldDesc);
+
+  let projectName = req.params.id;
+
+  let myQuery = { name: projectName, "tasks.description": oldDesc };
+
+  //right now is just deletes the task?
+  //query is good
+  let newValues = {
+    $set: {
+      "tasks.$.description": updatedDesc,
+    },
+  };
 
   db_connect
     .collection("projects")
     .updateOne(myQuery, newValues, function (err, res) {
       if (err) throw err;
-      console.log("updated 1 task")
-      response.json(res)
-    })
-})
+      console.log("updated 1 task");
+      response.json(res);
+    });
+});
 
+//edit time on task
+recordRoutes
+  .route("/timer/:projectName/task/:taskIndex")
+  .post((req, response) => {
+    let db_connect = dbo.getDb();
+
+    let secondsElapsed = req.body.totalElapsedSeconds;
+    console.log(secondsElapsed);
+
+    let projectName = req.params.projectName;
+    let index = parseInt(req.params.taskIndex);
+    console.log(index);
+
+    let myQuery = { name: projectName };
+
+    //increase by secondsElapsed
+
+    //doesn't look like its finding it
+    let newValues = {
+      $inc: {
+        [`tasks.${index}.seconds`]: parseFloat(secondsElapsed),
+      },
+    };
+
+    db_connect
+      .collection("projects")
+      .updateOne(myQuery, newValues, function (err, res) {
+        if (err) throw err;
+        console.log("updated 1 task");
+        response.json(res);
+      });
+  });
 
 // This section will help you delete a record // not using this rn
 recordRoutes.route("/:id").delete((req, response) => {
@@ -200,7 +190,5 @@ recordRoutes.route("/:id").delete((req, response) => {
     response.json(obj);
   });
 });
-
-
 
 module.exports = recordRoutes;
