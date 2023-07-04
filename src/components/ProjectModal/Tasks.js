@@ -20,7 +20,10 @@ export const Tasks = ({ tasks, setTasks }) => {
     <>
       {tasks?.map((task, index) => (
         <>
+          
           <div style={{ width: `${100 - task.tier * 1.5}%` }} className="task">
+          <span style={{width: '0' }} ><span className="connector-line"></span></span>
+         
             <TaskDescription task={task} tasks={tasks} setTasks={setTasks} />
             <h2 className="task-seconds">
               <span>Hours: </span>
@@ -42,6 +45,7 @@ export const Tasks = ({ tasks, setTasks }) => {
               <ChevronDown color="#24e2e8df" />
             </div>
           </div>
+         
           <AddSubTask
             type="sub"
             task={task}

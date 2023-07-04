@@ -74,9 +74,10 @@
         width: 70%;
         display: flex;
         flex-direction: column;
-        gap: .3vw;
+        gap: .15vw;
         align-items: end;
         overflow-y: scroll;
+        position: relative;
         
     
 
@@ -102,14 +103,17 @@
         .task {
             @include box;
             display: flex;
+            position: relative;
             box-sizing: border-box;
             color: $secondary-text;
-            padding: .6vw;
-            gap: 1vw;
+            padding: .45vw;
+          
+            background-color: $primary-color;
             justify-content: center;
             align-items: center;
             width: 100%;
-        
+
+
       
         }
 
@@ -267,3 +271,18 @@
     background: $secondary-color;
   }
 
+  .connector-line {
+    position: relative;
+    
+    flex-basis: 0;
+    display: block;
+    align-self: center;
+    
+    width: 2.67vw;
+    height: 2vw;
+    
+    border-left: solid .15vw $highlight-blue;
+    border-bottom: solid .15vw $highlight-blue;
+    z-index: -1;
+    transform: translate(-50%, -50%); 
+  }
