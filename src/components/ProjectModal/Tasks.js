@@ -22,7 +22,7 @@ export const Tasks = ({ tasks, setTasks }) => {
         <>
           
           <div style={{ width: `${100 - task.tier * 1.5}%` }} className="task">
-          <span style={{width: '0' }} ><span className="connector-line"></span></span>
+          <span style={{width: '0'}} >{ task.tier ? <span className="connector-line"></span> : null}</span>
          
             <TaskDescription task={task} tasks={tasks} setTasks={setTasks} />
             <h2 className="task-seconds">
