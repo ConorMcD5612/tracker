@@ -50,13 +50,16 @@ export const ProjectModal = () => {
         </div>
       </div>
 
-      <div className="tasks-container">
-        <div className="current-task">
-          <h2>
-            <span>Current: </span>go to grocery store otherwise
-          </h2>
+      <div></div>
+      <div className="tasks-padding">
+        <div className="tasks-container">
+          <div className="current-task">
+            <h2>
+              <span>Current: </span>go to grocery store otherwise
+            </h2>
+          </div>
+          <Tasks tasks={tasks} setTasks={setTasks} />
         </div>
-        <Tasks tasks={tasks} setTasks={setTasks} />
       </div>
     </div>
   );

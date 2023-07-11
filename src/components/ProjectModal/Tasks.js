@@ -16,13 +16,33 @@ export const Tasks = ({ tasks, setTasks }) => {
 
   const location = useLocation();
 
+  const colors = ["#FA3BF0","#FBF719","#24e2e8df"]
+
+  
+  const colorPicker = (tier) => {
+    tier++;
+    // tier 3 6 9 12
+    if(tier % 3 == 0) {
+      return colors[0]
+    }
+
+    //tier 2 
+    if(tier % 2 == 0) {
+      return colors[1]
+    }
+
+    if(tier % 1 == 0) {
+      return colors[2]
+    }
+  
+  }
+
   return (
     <>
       {tasks?.map((task, index) => (
         <>
           
-          <div style={{ width: `${100 - task.tier * 1.5}%` }} className="task">
-          <span style={{width: '0'}} >{ task.tier ? <span className="connector-line"></span> : null}</span>
+          <div style={{ width: `${100 - task.tier * 1.5}%`, border: `.15vw solid ${colorPicker(task.tier)}` }} className="task">
          
             <TaskDescription task={task} tasks={tasks} setTasks={setTasks} />
             <h2 className="task-seconds">
