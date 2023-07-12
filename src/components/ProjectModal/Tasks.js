@@ -37,6 +37,11 @@ export const Tasks = ({ tasks, setTasks }) => {
   
   }
 
+  const secToHours = (seconds) => {
+   seconds /= 3600
+   return seconds.toFixed(1).padStart(4, "0")
+  }
+
   return (
     <>
       {tasks?.map((task, index) => (
@@ -47,7 +52,7 @@ export const Tasks = ({ tasks, setTasks }) => {
             <TaskDescription task={task} tasks={tasks} setTasks={setTasks} />
             <h2 className="task-seconds">
               <span>Hours: </span>
-              {task.seconds?.toFixed(1).padStart(4, "0")}
+              {secToHours(task.seconds)}
             </h2>
             <div className="task-buttons">
               {tasks[index + 1]?.tier > task.tier ? null : (

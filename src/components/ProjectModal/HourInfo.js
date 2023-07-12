@@ -9,6 +9,8 @@ export const HourInfo = ({tasks}) => {
       tasks.forEach((task) => {
         totalHours += task.seconds;
       });
+      totalHours /= 3600;
+      totalHours = totalHours.toFixed(1)
       setHours({total: totalHours, weekly: 40, daily: 10});
     }, [tasks]);
 

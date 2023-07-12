@@ -55,6 +55,7 @@ export const ProjectModal = () => {
         <div className="tasks-container">
           <div className="current-task">
             <h2>
+              {/*Make task componenet so I can just use it here and tasks  */}
               <span>Current: </span>go to grocery store otherwise
             </h2>
           </div>
