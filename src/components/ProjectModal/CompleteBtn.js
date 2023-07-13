@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router";
 import { Check } from "react-feather";
 
-export const CompleteBtn = ({ task, tasks, setTasks }) => {
+export const CompleteBtn = ({ task, tasks, setTasks, color }) => {
   const params = useParams();
   
   const completeTask = async () => {
@@ -20,7 +20,7 @@ export const CompleteBtn = ({ task, tasks, setTasks }) => {
   return (
     <button onClick={() => completeTask()} className="complete-btn">
       <div>
-        <Check color="#24e2e8df" />
+        <Check color={color} />
       </div>
     </button>
   );

@@ -14,6 +14,8 @@ export const HourInfo = ({tasks}) => {
       setHours({total: totalHours, weekly: 40, daily: 10});
     }, [tasks]);
 
+  
+
   return (
     <div className="hours">
     <h1>Hours spent:</h1>
