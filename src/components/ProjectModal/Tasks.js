@@ -2,14 +2,30 @@ import { AddRegularTask } from "./AddRegularTask";
 
 import { Outlet, useLocation } from "react-router-dom";
 import { AddSubTask } from "./AddSubTask";
-
-import { React } from "react";
+import { useParams } from "react-router-dom";
+import { React, useEffect } from "react";
 import { Task } from "./Task";
-
 import { useState } from "react";
+import { TaskContext } from "../context/TaskContext";
 
-export const Tasks = ({ tasks, setTasks }) => {
+export const Tasks = () => {
   const [openSubIndex, setOpenSubIndex] = useState(-1);
+
+  const [tasks, setTasks] = useState([]);
+
+  const taskData = {
+    tasks,
+    setTasks,
+  };
+
+  const params = useParams()
+  useEffect(() => {
+    fetch(`http://localhost:5000/projects/${params.id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTasks(data.tasks);
+      });
+  }, [tasks.length]);
 
   const colors = ["#FA3BF0", "#FBF719", "#24e2e8df"];
 
@@ -31,7 +47,7 @@ export const Tasks = ({ tasks, setTasks }) => {
   };
 
   return (
-    <>
+    <TaskContext.Provider value={taskData}>
       {tasks?.map((task, index) => (
         <>
           <Task
@@ -39,8 +55,6 @@ export const Tasks = ({ tasks, setTasks }) => {
             index={index}
             openSubIndex={openSubIndex}
             setOpenSubIndex={setOpenSubIndex}
-            tasks={tasks}
-            setTasks={setTasks}
             color={colorPicker(task.tier)}
           />
 
@@ -48,15 +62,13 @@ export const Tasks = ({ tasks, setTasks }) => {
             type="sub"
             task={task}
             index={index}
-            setTasks={setTasks}
-            tasks={tasks}
             setOpenSubIndex={setOpenSubIndex}
             openSubIndex={openSubIndex}
           />
           <Outlet />
         </>
       ))}
-      <AddRegularTask type="new" tasks={tasks} setTasks={setTasks} />
-    </>
+      <AddRegularTask type="new" />
+    </TaskContext.Provider>
   );
 };

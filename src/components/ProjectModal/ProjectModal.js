@@ -10,33 +10,19 @@ import { TaskContext } from "../context/TaskContext";
 import "./taskStyles.scss";
 
 export const ProjectModal = () => {
-  const [tasks, setTasks] = useState([]);
+  
   const [projectInfo, setProjectInfo] = useState({});
-
-  const taskData = {
-    tasks,
-    setTasks
-  }
+  
 
   const params = useParams();
- 
-
-  useEffect(() => {
-    fetch(`http://localhost:5000/projects/${params.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setTasks(data.tasks);
-        setProjectInfo({ name: data.name, description: data.description });
-      });
-  }, [tasks.length]);
-
+  
   const capitlize = (text) => {
     const str = text.charAt(0).toUpperCase() + text.slice(1);
     return str;
   };
 
   return (
-    <TaskContext.Provider value={taskData}>
+  
     <div className="task-page-container">
       <div className="project-info">
         <header>
@@ -71,6 +57,6 @@ export const ProjectModal = () => {
         </div>
       </div>
     </div>
-    </TaskContext.Provider>
+
   );
 };
