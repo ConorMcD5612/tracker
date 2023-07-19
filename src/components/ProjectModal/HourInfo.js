@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { TaskContext } from '../context/TaskContext';
 import { useEffect } from 'react'
 
-export const HourInfo = ({tasks}) => {
+
+
+export const HourInfo = () => {
     const [{total, daily, weekly}, setHours] = useState({total: 0, daily: 0, weekly: 0});
+
+    const tasks = useContext(TaskContext)
 
     useEffect(() => {
       let totalHours = 0;

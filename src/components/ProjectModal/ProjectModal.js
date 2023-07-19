@@ -6,13 +6,20 @@ import { Tasks } from "./Tasks";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Settings } from "react-feather";
 import { HourInfo } from "./HourInfo";
+import { TaskContext } from "../context/TaskContext";
 import "./taskStyles.scss";
 
 export const ProjectModal = () => {
   const [tasks, setTasks] = useState([]);
   const [projectInfo, setProjectInfo] = useState({});
 
+  const taskData = {
+    tasks,
+    setTasks
+  }
+
   const params = useParams();
+ 
 
   useEffect(() => {
     fetch(`http://localhost:5000/projects/${params.id}`)
@@ -29,13 +36,14 @@ export const ProjectModal = () => {
   };
 
   return (
+    <TaskContext.Provider value={taskData}>
     <div className="task-page-container">
       <div className="project-info">
         <header>
           <h1>{capitlize(params.id)}</h1>
         </header>
 
-        <HourInfo tasks={tasks} />
+        <HourInfo />
 
         <p className="project-description">
           <h1>Description:</h1>
@@ -59,9 +67,10 @@ export const ProjectModal = () => {
               <span>Current: </span>go to grocery store otherwise
             </h2>
           </div>
-          <Tasks tasks={tasks} setTasks={setTasks} />
+          <Tasks />
         </div>
       </div>
     </div>
+    </TaskContext.Provider>
   );
 };

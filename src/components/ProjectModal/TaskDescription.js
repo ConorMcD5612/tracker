@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState, useContext } from 'react'
+import { TaskContext } from '../context/TaskContext';
 import { useState } from "react";
 import { useParams } from "react-router";
 
 export const TaskDescription = ({ task }) => {
   const [showInput, setShowInput] = useState(false);
   const [taskDescription, setTaskDescription] = useState(task.description);
-
+  const tasks = useContext(TaskContext)
+  
   const params = useParams();
 
   const submitHandler = async (e) => {
