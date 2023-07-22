@@ -8,15 +8,26 @@ export const HourInfo = () => {
     const [{total, daily, weekly}, setHours] = useState({total: 0, daily: 0, weekly: 0});
 
     const tasks = useContext(TaskContext)
+  
+    
 
     useEffect(() => {
-      let totalHours = 0;
+      let currDate = new Date()
+      
+      currDate = `${currDate.secUpdated.getDate()}/${currDate.secUpdated.getMonth() + 1}/${currDate.secUpdated.getFullYear()}`
+      
+      let tempTotal = 0, tempDaily = 0, tempWeekly = 0
       tasks.forEach((task) => {
-        totalHours += task.seconds;
-      });
-      totalHours /= 3600;
-      totalHours = totalHours.toFixed(1)
-      setHours({total: totalHours, weekly: 40, daily: 10});
+        let taskDate = `${task.secUpdated.getDate()}/${task.secUpdated.getMonth() + 1}/${task.secUpdated.getFullYear()}`
+        //if today
+        if(currDate == taskDate) {
+          tempDaily += task.seconds
+        }
+        //if during this week
+        if(currDate.slice(0, 1) == taskDate.slice(0, 1) && currDate.slice(-1,1) == taskDate.slice(-1, 1)){
+  
+        }
+      })
     }, [tasks]);
 
   
@@ -31,7 +42,7 @@ export const HourInfo = () => {
       <span>Week:</span> 40
     </h3>
     <h2>
-      <span>Total:</span> {total}
+      <span>Total:</span> 30
     </h2>
   </div>
   )

@@ -51,4 +51,4 @@ export const AddProject = ({ projects, setProjects }) => {
       </form>
     </div>
   );
-};
+};  

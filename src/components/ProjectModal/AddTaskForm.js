@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { useParams } from "react-router";
+import { useContext } from "react";
+import { TaskContext } from "../context/TaskContext";
 
-export const AddTaskForm = ({ setTasks, tasks, ...props }) => {
+export const AddTaskForm = ({...props }) => {
   const [taskDescription, setTaskDescription] = useState("");
 
   const params = useParams();
+  const {tasks, setTasks} = useContext(TaskContext)
 
   const taskInput = async (e) => {
     e.preventDefault();

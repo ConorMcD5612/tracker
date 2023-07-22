@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AddTaskForm } from "./AddTaskForm.js";
 import { Plus } from "react-feather";
 
-//willjust be addtask btn
-export const AddRegularTask = ({ tasks, setTasks, ...props }) => {
-  const [addingTask, setAddingTask] = useState(false);
 
+//willjust be addtask btn
+export const AddRegularTask = ({ ...props }) => {
+  const [addingTask, setAddingTask] = useState(false);
+ 
   return (
     <>
       {addingTask ? (
@@ -13,8 +14,6 @@ export const AddRegularTask = ({ tasks, setTasks, ...props }) => {
           onClick={() => setAddingTask(false)}
           type={props.type}
           index={props.index}
-          tasks={tasks}
-          setTasks={setTasks}
         />
       ) : (
         <button onClick={() => setAddingTask(true)} className="add-regular">

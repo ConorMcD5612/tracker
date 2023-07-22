@@ -5,27 +5,13 @@ import { AddSubTask } from "./AddSubTask";
 import { useParams } from "react-router-dom";
 import { React, useEffect } from "react";
 import { Task } from "./Task";
-import { useState } from "react";
+import { useState, useContext} from "react";
 import { TaskContext } from "../context/TaskContext";
 
 export const Tasks = () => {
   const [openSubIndex, setOpenSubIndex] = useState(-1);
 
-  const [tasks, setTasks] = useState([]);
-
-  const taskData = {
-    tasks,
-    setTasks,
-  };
-
-  const params = useParams()
-  useEffect(() => {
-    fetch(`http://localhost:5000/projects/${params.id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setTasks(data.tasks);
-      });
-  }, [tasks.length]);
+  const {tasks} = useContext(TaskContext)
 
   const colors = ["#FA3BF0", "#FBF719", "#24e2e8df"];
 
@@ -47,7 +33,7 @@ export const Tasks = () => {
   };
 
   return (
-    <TaskContext.Provider value={taskData}>
+   <>
       {tasks?.map((task, index) => (
         <>
           <Task
@@ -69,6 +55,6 @@ export const Tasks = () => {
         </>
       ))}
       <AddRegularTask type="new" />
-    </TaskContext.Provider>
+    </>
   );
 };

@@ -27,7 +27,7 @@ recordRoutes.route("/projects").get(function (req, res) {
 recordRoutes.route("/projects/:id").get(function (req, res) {
   let db_connect = dbo.getDb();
   let myQuery = { name: req.params.id };
-  0;
+  
   db_connect.collection("projects").findOne(myQuery, function (err, result) {
     if (err) throw err;
     res.json(result);
@@ -163,12 +163,14 @@ recordRoutes
     let myQuery = { name: projectName };
 
     //increase by secondsElapsed
-
-    //doesn't look like its finding it
+  
     let newValues = {
       $inc: {
         [`tasks.${index}.seconds`]: parseFloat(secondsElapsed),
       },
+      $set: {
+       [`tasks.${index}.secUpdated`]: new Date() 
+      }
     };
 
     db_connect
@@ -181,14 +183,47 @@ recordRoutes
   });
 
 // This section will help you delete a record // not using this rn
-recordRoutes.route("/:id").delete((req, response) => {
-  let db_connect = dbo.getDb();
-  let myquery = { _id: ObjectId(req.params.id) };
-  db_connect.collection("records").deleteOne(myquery, function (err, obj) {
-    if (err) throw err;
-    console.log("1 document deleted");
-    response.json(obj);
-  });
-});
+// recordRoutes.route("/:id").delete((req, response) => {
+//   let db_connect = dbo.getDb();
+//   let myquery = { _id: ObjectId(req.params.id) };
+//   db_connect.collection("records").deleteOne(myquery, function (err, obj) {
+//     if (err) throw err;
+//     console.log("1 document deleted");
+//     response.json(obj);
+//   });
+// });
+
+// recordRoutes.route("/:projectName/dates-for-seconds").get((req, res) => {
+//   let currDate = new Date();
+//   let projectName = req.params.projectName
+//   let myQuery = {name: projectName, "tasks.secUpdated" }
+
+//   db_connect.collection("projects")
+//   .aggregate([
+//     { $match: { name: projectName } }, // Match the specific project
+//     {
+//       $project: {
+//         _id: 0, // Exclude the _id field from the output
+//         secUpdated: "$tasks.secUpdated", // Extract the 'secUpdated' field from 'tasks'
+//       },
+//     },
+//   ])
+//   .then((result) => {
+//     if (result.length === 0) {
+//       return res.status(404).json({ message: "Project not found" });
+//     }
+//     const secUpdatedArray = result[0].secUpdated;
+//     res.json(secUpdatedArray);
+//   })
+//   .catch((err) => {
+//     console.error("Error retrieving project:", err);
+//     res.status(500).json({ message: "Error retrieving project" });
+//   });
+
+// })
+
+
+
+
 
 module.exports = recordRoutes;

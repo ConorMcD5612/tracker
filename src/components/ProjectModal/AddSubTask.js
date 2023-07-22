@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, {useContext } from "react";
 import { AddTaskForm } from "./AddTaskForm";
-import { Plus } from "react-feather";
+import { TaskContext } from "../context/TaskContext";
 
 export const AddSubTask = ({
-  tasks,
-  setTasks,
-  setIsUpdating,
   openSubIndex,
   setOpenSubIndex,
   ...props
 }) => {
+
+  const {tasks} = useContext(TaskContext)
+
   return (
     <div
       style={{ width: `${100 - tasks[props.index].tier * 3}%` }}
@@ -17,13 +17,11 @@ export const AddSubTask = ({
     >
       {tasks[props.index] == tasks[openSubIndex] ? (
         <AddTaskForm
-          setIsUpdating={setIsUpdating}
+          
           onBlur={() => setOpenSubIndex(-1)}
           onClick={() => setOpenSubIndex(-1)}
           type={props.type}
           index={props.index}
-          tasks={tasks}
-          setTasks={setTasks}
         />
       ) : null}
     </div>

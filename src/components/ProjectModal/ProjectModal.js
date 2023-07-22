@@ -12,9 +12,23 @@ import "./taskStyles.scss";
 export const ProjectModal = () => {
   
   const [projectInfo, setProjectInfo] = useState({});
-  
+  const [tasks, setTasks] = useState([]);
 
-  const params = useParams();
+  const taskData = {
+    tasks,
+    setTasks,
+  };
+
+  const params = useParams()
+  useEffect(() => {
+    fetch(`http://localhost:5000/projects/${params.id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTasks(data.tasks);
+      });
+  }, [tasks.length]);
+
+
   
   const capitlize = (text) => {
     const str = text.charAt(0).toUpperCase() + text.slice(1);
@@ -22,7 +36,7 @@ export const ProjectModal = () => {
   };
 
   return (
-  
+    <TaskContext.Provider value={taskData}>
     <div className="task-page-container">
       <div className="project-info">
         <header>
@@ -57,6 +71,6 @@ export const ProjectModal = () => {
         </div>
       </div>
     </div>
-
+</TaskContext.Provider>
   );
 };
