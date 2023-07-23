@@ -7,27 +7,52 @@ import { useEffect } from 'react'
 export const HourInfo = () => {
     const [{total, daily, weekly}, setHours] = useState({total: 0, daily: 0, weekly: 0});
 
-    const tasks = useContext(TaskContext)
+    const { tasks } = useContext(TaskContext)
   
     
 
     useEffect(() => {
       let currDate = new Date()
+      let day = currDate.getDay()
+      //need to change it so its based on time zone 
+      currDate = currDate.toISOString().slice(0, 10)
+
+      let sunday = parseInt(currDate.slice(-2)) - (6 - day)
+      console.log(sunday)
+    
       
-      currDate = `${currDate.secUpdated.getDate()}/${currDate.secUpdated.getMonth() + 1}/${currDate.secUpdated.getFullYear()}`
+      
       
       let tempTotal = 0, tempDaily = 0, tempWeekly = 0
+    
       tasks.forEach((task) => {
-        let taskDate = `${task.secUpdated.getDate()}/${task.secUpdated.getMonth() + 1}/${task.secUpdated.getFullYear()}`
-        //if today
+      
+        if(task.secUpdated){
+          //YYYY-MM-DD
+         let taskDate = task.secUpdated.slice(0, 10)
+     
+        
         if(currDate == taskDate) {
           tempDaily += task.seconds
         }
-        //if during this week
-        if(currDate.slice(0, 1) == taskDate.slice(0, 1) && currDate.slice(-1,1) == taskDate.slice(-1, 1)){
-  
+       
+        //if year and month are the same 
+        if(currDate.slice(0, 4) == taskDate.slice(0, 4) && 
+        currDate.slice(5, 7) == taskDate.slice(5, 7)){
+          let taskDay = parseInt(taskDate.slice(-2))
+          console.log(taskDay)
+          if(taskDay >= sunday ){
+            console.log("DOES NOT GET HERE")
+            tempWeekly += task.seconds
+          }
+          
         }
+
+      }
+      tempTotal += task.seconds
       })
+
+      console.log(tempTotal, tempDaily, tempWeekly)
     }, [tasks]);
 
   
