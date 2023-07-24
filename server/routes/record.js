@@ -41,6 +41,7 @@ recordRoutes.route("/projects/add").post(function (req, response) {
     tasks: [],
     name: req.body.name,
     description: req.body.description,
+    
   };
   db_connect.collection("projects").insertOne(myobj, function (err, res) {
     if (err) throw err;
@@ -166,11 +167,11 @@ recordRoutes
   
     let newValues = {
       $inc: {
-        [`tasks.${index}.seconds`]: parseFloat(secondsElapsed),
+        [`tasks.${index}.seconds`]: parseInt(secondsElapsed),
+        weekly: parseInt(secondsElapsed),
+        daily: parseInt(secondsElapsed)
       },
-      $set: {
-       [`tasks.${index}.secUpdated`]: new Date() 
-      }
+    
     };
 
     db_connect

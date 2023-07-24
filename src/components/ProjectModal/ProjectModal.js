@@ -25,6 +25,7 @@ export const ProjectModal = () => {
       .then((response) => response.json())
       .then((data) => {
         setTasks(data.tasks);
+        setProjectInfo(data)
       });
   }, [tasks.length]);
 
@@ -43,7 +44,7 @@ export const ProjectModal = () => {
           <h1>{capitlize(params.id)}</h1>
         </header>
 
-        <HourInfo />
+        <HourInfo projectInfo={projectInfo} />
 
         <p className="project-description">
           <h1>Description:</h1>
