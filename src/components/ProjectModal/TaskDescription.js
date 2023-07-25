@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 export const TaskDescription = ({ task }) => {
   const [showInput, setShowInput] = useState(false);
   const [taskDescription, setTaskDescription] = useState(task.description);
-  const tasks = useContext(TaskContext)
+ 
   
   const params = useParams();
 

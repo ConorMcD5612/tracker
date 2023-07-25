@@ -9,10 +9,12 @@ import { HourInfo } from "./HourInfo";
 import { TaskContext } from "../context/TaskContext";
 import "./taskStyles.scss";
 
+
 export const ProjectModal = () => {
   
   const [projectInfo, setProjectInfo] = useState({});
   const [tasks, setTasks] = useState([]);
+
 
   const taskData = {
     tasks,
