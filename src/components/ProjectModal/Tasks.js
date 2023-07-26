@@ -37,11 +37,7 @@ export const Tasks = () => {
 
   return (
     <>
-      <CurrentTask
-        task={tasks[currentTask]}
-        index={currentTask}
-        color={colorPicker(0)}
-      />
+      <CurrentTask task={tasks[currentTask]} index={currentTask} color={colorPicker(0)}/>
       {tasks?.map((task, index) => (
         <>
           <Task

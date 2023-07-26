@@ -91,17 +91,7 @@
 
 
     .current-task {
-      @include box;
-      border: 0.15vw solid $highlight-blue;
-      box-sizing: border-box;
-      z-index: 2;
-      padding: 0.7vw;
-      display: flex;
-      width: 100%;
-
-      span {
-        color: $highlight-blue;
-      }
+      margin-bottom: .5vw;
     }
 
 
@@ -121,6 +111,8 @@
       align-items: center;
       width: 100%;
     }
+
+   
 
     
 

@@ -1,14 +1,12 @@
 import React from "react";
 import { TaskDescription } from "./TaskDescription";
 import { TaskBtns } from "./TaskBtns";
+import { TaskSeconds } from "./TaskSeconds";
 
 
 export const Task = ({ task, index, setOpenSubIndex, color }) => {
  
-  const secToHours = (seconds) => {
-    seconds /= 3600;
-    return seconds.toFixed(1).padStart(4, "0");
-  };
+
 
   return (
     <div
@@ -19,10 +17,7 @@ export const Task = ({ task, index, setOpenSubIndex, color }) => {
       className="task"
     >
       <TaskDescription task={task} />
-      <h2 className="task-seconds">
-        <span>Hours: </span>
-        {secToHours(task.seconds)}
-      </h2>
+      <TaskSeconds task={task} />
       <TaskBtns
         task={task}
         index={index}
