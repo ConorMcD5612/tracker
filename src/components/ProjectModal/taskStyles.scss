@@ -137,6 +137,11 @@
       justify-content: end;
       gap: 0.5vw;
       width: 20%;
+
+      a, div {
+        display: flex;
+        place-items: center;
+      }
     }
 
     .task-form {

@@ -5,15 +5,16 @@ import { useEffect } from "react";
 import { Task } from "./Task";
 import { TaskSeconds } from "./TaskSeconds";
 import { Tasks } from "./Tasks";
+import { TaskContext } from "../context/TaskContext";
+import { useContext } from "react";
 
-export const CurrentTask = ({ index, task, color }) => {
-  // const [editedTask, setEditedTask] = useState({})
-  // useEffect(() => {
-  //   let tempTask = task;
-  //   tempTask.tier = 0;
-  //     setEditedTask(tempTask)
+export const CurrentTask = ({task, index, color}) => {
+  //currentTask is set in clockBtn (when user clicks clockbtn)
+  
 
-  // }, [])
+  const { tasks } = useContext(TaskContext)
+
+  
 
   return (
     <>
@@ -29,7 +30,7 @@ export const CurrentTask = ({ index, task, color }) => {
             {task.description}
           </h2>
           <TaskSeconds  task={task} />
-          <TaskBtns index={index} task={task} color={color} />
+          <TaskBtns index={index} task={task}  />
         </div>
       ) : null}
     </>

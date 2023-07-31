@@ -4,7 +4,7 @@ import { TaskBtns } from "./TaskBtns";
 import { TaskSeconds } from "./TaskSeconds";
 
 
-export const Task = ({ task, index, setOpenSubIndex, color }) => {
+export const Task = ({ task, index, setOpenSubIndex, color, setCurrentTask }) => {
  
 
 
@@ -22,6 +22,7 @@ export const Task = ({ task, index, setOpenSubIndex, color }) => {
         task={task}
         index={index}
         setOpenSubIndex={setOpenSubIndex}
+        setCurrentTask={setCurrentTask}
         color={color}
       />
     </div>

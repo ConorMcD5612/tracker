@@ -224,6 +224,31 @@ recordRoutes
 // })
 
 
+recordRoutes.route("/:projectName/set-current-task").post((req, response) => {
+  
+
+  let db_connect = dbo.getDb();
+
+ 
+  let projectName = req.params.projectName;
+
+  let myQuery = { name: projectName };
+  console.log("in current")
+  let newValues = {
+    $set: {
+      currentTask: parseInt(req.body.index)
+    }
+  };
+
+  db_connect
+    .collection("projects")
+    .updateOne(myQuery, newValues, function (err, res) {
+      if (err) throw err;
+      console.log("deleted 1 task");
+      response.json(res);
+    });
+});
+
 
 
 

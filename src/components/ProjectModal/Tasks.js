@@ -9,12 +9,12 @@ import { useState, useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
 import { CurrentTask } from "./CurrentTask";
 
-export const Tasks = () => {
+export const Tasks = ({projectInfo}) => {
   const [openSubIndex, setOpenSubIndex] = useState(-1);
 
   const { tasks } = useContext(TaskContext);
 
-  const [currentTask, setCurrentTask] = useState(2);
+  const [currentTask, setCurrentTask] = useState(0);
 
   const colors = ["#FA3BF0", "#FBF719", "#24e2e8df"];
 
@@ -37,7 +37,7 @@ export const Tasks = () => {
 
   return (
     <>
-      <CurrentTask task={tasks[currentTask]} index={currentTask} color={colorPicker(0)}/>
+      <CurrentTask task={tasks[projectInfo.currentTask]} index={projectInfo.currentTask} color={colorPicker(0)}/>
       {tasks?.map((task, index) => (
         <>
           <Task
@@ -46,6 +46,8 @@ export const Tasks = () => {
             openSubIndex={openSubIndex}
             setOpenSubIndex={setOpenSubIndex}
             color={colorPicker(task.tier)}
+            setCurrentTask={setCurrentTask}
+            projectInfo={projectInfo}
           />
 
           <AddSubTask

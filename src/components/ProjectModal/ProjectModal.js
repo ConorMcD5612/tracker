@@ -64,7 +64,7 @@ export const ProjectModal = () => {
       <div></div>
       <div className="tasks-padding">
         <div className="tasks-container">
-          <Tasks />
+          <Tasks projectInfo={projectInfo}/>
         </div>
       </div>
     </div>
