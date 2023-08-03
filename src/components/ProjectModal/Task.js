@@ -3,11 +3,14 @@ import { TaskDescription } from "./TaskDescription";
 import { TaskBtns } from "./TaskBtns";
 import { TaskSeconds } from "./TaskSeconds";
 
-
-export const Task = ({ task, index, setOpenSubIndex, color, setCurrentTask }) => {
- 
-
-
+export const Task = ({
+  task,
+  index,
+  setOpenSubIndex,
+  color,
+  setCurrentTask,
+  projectInfo,
+}) => {
   return (
     <div
       style={{
@@ -24,6 +27,7 @@ export const Task = ({ task, index, setOpenSubIndex, color, setCurrentTask }) =>
         setOpenSubIndex={setOpenSubIndex}
         setCurrentTask={setCurrentTask}
         color={color}
+        projectInfo={projectInfo}
       />
     </div>
   );

@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import { Clock } from "react-feather";
 import { useParams } from "react-router-dom";
 
-export const ClockBtn = ({ index, color, task }) => {
+export const ClockBtn = ({ index, color }) => {
   const location = useLocation();
  
   const params = useParams()

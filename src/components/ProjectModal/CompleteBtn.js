@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { Check } from "react-feather";
 import { TaskContext } from "../context/TaskContext";
 
-export const CompleteBtn = ({ task, color }) => {
+export const CompleteBtn = ({ task, color, projectInfo, index }) => {
   const params = useParams();
   const {tasks, setTasks} = useContext( TaskContext )
 
@@ -16,7 +16,9 @@ export const CompleteBtn = ({ task, color }) => {
       },
       body: JSON.stringify(task),
     });
+
     setTasks(tasks.filter((t) => t !== task));
+    
   };
 
   return (

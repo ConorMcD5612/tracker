@@ -12,6 +12,7 @@ export const TaskBtns = ({
   setOpenSubIndex,
   color,
   setCurrentTask,
+  projectInfo
 }) => {
   const { tasks } = useContext(TaskContext);
 
@@ -19,9 +20,8 @@ export const TaskBtns = ({
     <div className="task-buttons">
       {tasks[index + 1]?.tier > task.tier ? null : (
         <>
-        <ClockBtn index={index} color={color} task={task} />
-          <CompleteBtn color={color} task={task} />
-          
+        <ClockBtn index={index} color={color} />
+        <CompleteBtn index={index} projectInfo={projectInfo} color={color} task={task} />
         </>
       )}
   
