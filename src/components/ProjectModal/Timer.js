@@ -8,7 +8,7 @@ import { ArrowLeft } from "react-feather";
 export const Timer = () => {
   const stopwatch = useStopwatch();
   const [[minutes, seconds], setMinSec] = useState([0, 0]);
-  const [startSeconds, setStartSeconds] = useState(60 * 40);
+  const [startSeconds, setStartSeconds] = useState(10 * 1);
   const [showInput, setShowInput] = useState(false);
 
   const navigate = useNavigate();
@@ -38,10 +38,8 @@ export const Timer = () => {
     const interval = setInterval(() => {
       const { minutes, seconds } = unixToMinSec();
       setMinSec([minutes, seconds]);
-      console.log(minutes, seconds);
-      console.log();
-
       if (minutes == 0 && seconds == 0) {
+        console.log("stopwatch, stopped")
         stopwatch.stop();
       }
     }, 1000);
