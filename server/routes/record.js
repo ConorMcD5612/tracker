@@ -169,7 +169,8 @@ recordRoutes
       $inc: {
         [`tasks.${index}.seconds`]: parseInt(secondsElapsed),
         weekly: parseInt(secondsElapsed),
-        daily: parseInt(secondsElapsed)
+        daily: parseInt(secondsElapsed),
+        total: parseInt(secondsElapsed)
       },
     
     };
