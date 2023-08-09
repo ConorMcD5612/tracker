@@ -251,6 +251,16 @@ recordRoutes.route("/:projectName/set-current-task").post((req, response) => {
 });
 
 
+//create new user 
+recordRoutes.route("/add-user").post(function (req, response) {
+  let db_connect = dbo.getDb();
+  let data = {idToken: req.body.sub }
+  db_connect.collection("projects").insertOne(data, function (err, res) {
+    if (err) throw err;
+    response.json(res);
+  });
+});
+
 
 
 module.exports = recordRoutes;
