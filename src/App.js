@@ -8,34 +8,23 @@ import { useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin, googleLogin } from "@react-oauth/google";
+import { AuthProvider, useAuth } from "./components/context/AuthContext";
+import {Auth} from './components/Auth'
+
 
 
 function App() {
   const location = useLocation();
+  
   const background = location.state && location.state.background;
   
-
-  const createOrGetUser = async (response) => {
-    const decoded = jwt_decode(response.credential)
-    console.log(decoded)
-    //Make user 
-    const {sub} = decoded;
-    console.log(sub)
-
-    //if user exists 
-    await fetch(`http://localhost:5000/add-user`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({sub: sub}),
-    });
-  }
 
  
 
   return (
+ 
     <GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}>
+         <AuthProvider >
       <div>
         <Routes>
           <Route path="projects" element={<ProjectSection />} />
@@ -57,11 +46,10 @@ function App() {
           </Routes>
         )}
       </div>
-      <GoogleLogin
-        onSuccess={(response) => createOrGetUser(response)}
-        onError={() => console.log("error")}
-      />
+        <Auth />
+      </AuthProvider>
     </GoogleOAuthProvider>
+   
   );
 }
 
