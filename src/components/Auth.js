@@ -22,6 +22,7 @@ export function Auth() {
       },
       body: JSON.stringify({ sub: sub }),
     });
+    
   };
 
   useEffect(() => {
