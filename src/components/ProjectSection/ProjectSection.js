@@ -4,17 +4,26 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Plus } from "react-feather";
 import "./projectStyles.scss";
+import { useAuth } from "../context/AuthContext";
 
 export const ProjectSection = () => {
   const [projects, setProjects] = useState([]);
 
+  const { user } = useAuth()
+
+  const getProjects = async () => {
+   await fetch(`http://localhost:5000/projects/${user}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(user)
+      console.log(JSON.parse(localStorage.getItem("user")))
+      console.log(data);
+      setProjects(data.projects);
+    });
+  }
+
   useEffect(() => {
-    fetch("http://localhost:5000/projects/")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setProjects(data);
-      });
+    getProjects()
   }, [projects.length]);
 
   return (

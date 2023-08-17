@@ -12,22 +12,25 @@ const dbo = require("../db/conn");
 const ObjectId = require("mongodb").ObjectId;
 
 // Get all projects
-recordRoutes.route("/projects").get(function (req, res) {
+recordRoutes.route("/projects/:user").get(function (req, res) {
   let db_connect = dbo.getDb("tracker");
+  let query = {_id: req.params.user}
+  console.log(query)
   db_connect
     .collection("projects")
-    .find({})
-    .toArray(function (err, result) {
-      if (err) throw err;
-      res.json(result);
-    });
+    .findOne(query, (err, result) => {
+      if(err) throw err
+      res.json(result)
+    })
+    
 });
 
-// This gets document based on id so I can get task array
-recordRoutes.route("/projects/:id").get(function (req, res) {
+// This gets document based on user so I can get project 
+recordRoutes.route("/projects/:user/:projectName").get(function (req, res) {
   let db_connect = dbo.getDb();
-  let myQuery = { name: req.params.id };
+  let myQuery = { _id: req.params.user, "projects": {projectName: req.params.projectName} };
   
+
   db_connect.collection("projects").findOne(myQuery, function (err, result) {
     if (err) throw err;
     res.json(result);
@@ -35,15 +38,22 @@ recordRoutes.route("/projects/:id").get(function (req, res) {
 });
 
 // Create new project
-recordRoutes.route("/projects/add").post(function (req, response) {
+recordRoutes.route("/projects/:user/add").post(function (req, response) {
   let db_connect = dbo.getDb();
-  let myobj = {
-    tasks: [],
+
+  let newProject = {
     name: req.body.name,
     description: req.body.description,
-    
+    tasks: [],
   };
-  db_connect.collection("projects").insertOne(myobj, function (err, res) {
+  
+  let updateOperation = {
+    $push: {
+      projects: newProject
+    }
+  };
+
+  db_connect.collection("projects").updateOne({_id: req.params.user }, updateOperation, function (err, res) {
     if (err) throw err;
     response.json(res);
   });
