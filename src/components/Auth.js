@@ -4,10 +4,11 @@ import { GoogleLogin } from '@react-oauth/google';
 import jwt_decode from 'jwt-decode';
 import { useAuth } from './context/AuthContext';
 
-export function Auth() {
+export function Auth({setIsLoading}) {
   const { setUser } = useAuth();
 
   const createOrGetUser = async (response) => {
+   
     const decoded = jwt_decode(response.credential);
     const { sub } = decoded;
 
@@ -15,6 +16,7 @@ export function Auth() {
     setUser(sub);
 
     // Make an API call to add user if they don't exist
+    
     await fetch(`http://localhost:5000/add-user`, {
       method: 'POST',
       headers: {
@@ -22,6 +24,8 @@ export function Auth() {
       },
       body: JSON.stringify({ sub: sub }),
     });
+    console.log("done loading")
+   
     
   };
 
@@ -32,6 +36,7 @@ export function Auth() {
     if(storedUser){
       setUser(storedUser)
     }
+    setIsLoading(false)
 
   }, [])
 

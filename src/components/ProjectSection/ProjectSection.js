@@ -11,8 +11,8 @@ export const ProjectSection = () => {
 
   const { user } = useAuth()
 
-  const getProjects = async () => {
-   await fetch(`http://localhost:5000/projects/${user}`)
+  const getProjects = () => {
+    fetch(`http://localhost:5000/projects/${user}`)
     .then((response) => response.json())
     .then((data) => {
       console.log(user)

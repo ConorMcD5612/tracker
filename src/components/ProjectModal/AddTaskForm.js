@@ -3,10 +3,11 @@ import Modal from "react-modal";
 import { useParams } from "react-router";
 import { useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
+import { useAuth } from "../context/AuthContext";
 
 export const AddTaskForm = ({...props }) => {
   const [taskDescription, setTaskDescription] = useState("");
-
+  const {user} = useAuth()
   const params = useParams();
   const {tasks, setTasks} = useContext(TaskContext)
 
@@ -44,7 +45,7 @@ export const AddTaskForm = ({...props }) => {
       setTasks(tempArr);
     }
 
-    await fetch(`http://localhost:5000/projects/${params.id}`, {
+    await fetch(`http://localhost:5000/projects/${user}/${params.id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

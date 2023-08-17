@@ -31,7 +31,7 @@ export const ProjectModal = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data)
-        setTasks(data.tasks);
+        setTasks(data.projects.tasks);
         setProjectInfo(data)
       });
   }, [tasks.length]);

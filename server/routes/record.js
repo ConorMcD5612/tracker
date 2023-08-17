@@ -60,14 +60,14 @@ recordRoutes.route("/projects/:user/add").post(function (req, response) {
 });
 
 //Goal of this is to add tasks to tasks array
-recordRoutes.route("/projects/:id").post(function (req, response) {
+recordRoutes.route("/projects/:user/:id").post(function (req, response) {
   const db_connect = dbo.getDb();
-  const myQuery = { name: req.params.id };
+  const myQuery = { _id: req.params.user};
   const { description, tier } = req.body;
-
+  console.log(req.params.id)
   let newValues = {
     $push: {
-      tasks: {
+      "projects.tasks": {
         description,
         tier,
         seconds: 0,
@@ -79,7 +79,7 @@ recordRoutes.route("/projects/:id").post(function (req, response) {
   if (tier) {
     newValues = {
       $push: {
-        tasks: {
+        "projects.tasks": {
           $each: [
             {
               description,
