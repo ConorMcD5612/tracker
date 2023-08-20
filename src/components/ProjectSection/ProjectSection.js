@@ -10,13 +10,21 @@ export const ProjectSection = () => {
   const [projects, setProjects] = useState([]);
   const { user } = useAuth()
 
-  useEffect(() => {
+
+
+  const getProjects = () => {
     fetch(`http://localhost:5000/projects/${user}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.projects);
-        setProjects(data.projects);
-      });
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(user)
+      console.log(JSON.parse(localStorage.getItem("user")))
+      console.log(data);
+      setProjects(data.projects);
+    });
+  }
+
+  useEffect(() => {
+    getProjects()
   }, [projects.length]);
 
   return (

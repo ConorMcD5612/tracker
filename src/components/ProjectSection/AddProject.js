@@ -1,9 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useAuth } from "../context/AuthContext";
 
 export const AddProject = ({ projects, setProjects }) => {
   const navigate = useNavigate();
+  const { user } = useAuth()
   const [form, setForm] = useState({
     description: "",
     name: "",
@@ -20,7 +22,7 @@ export const AddProject = ({ projects, setProjects }) => {
     const newPerson = { ...form };
 
     navigate("/projects");
-    await fetch("http://localhost:5000/projects/add", {
+    await fetch(`http://localhost:5000/projects/${user}/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

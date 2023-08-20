@@ -8,6 +8,7 @@ import { ArrowLeft, Settings } from "react-feather";
 import { HourInfo } from "./HourInfo";
 import { TaskContext } from "../context/TaskContext";
 import "./taskStyles.scss";
+import { useAuth } from "../context/AuthContext";
 
 
 export const ProjectModal = () => {
@@ -21,12 +22,16 @@ export const ProjectModal = () => {
     setTasks,
   };
 
+  const { user } = useAuth
   const params = useParams()
+
+
   useEffect(() => {
-    fetch(`http://localhost:5000/projects/${params.id}`)
+    fetch(`http://localhost:5000/projects/${user}/${params.id}`)
       .then((response) => response.json())
       .then((data) => {
-        setTasks(data.tasks);
+        console.log(data)
+        setTasks(data.projects.tasks);
         setProjectInfo(data)
       });
   }, [tasks.length]);
