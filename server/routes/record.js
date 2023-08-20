@@ -12,22 +12,23 @@ const dbo = require("../db/conn");
 const ObjectId = require("mongodb").ObjectId;
 
 // Get all projects
-recordRoutes.route("/projects").get(function (req, res) {
+recordRoutes.route("/projects/:user").get(function (req, res) {
   let db_connect = dbo.getDb("tracker");
+  let query = {_id: req.params.user }
   db_connect
     .collection("projects")
-    .find({})
-    .toArray(function (err, result) {
-      if (err) throw err;
-      res.json(result);
-    });
+    .findOne(query, (err, result) => {
+      if(err) throw err;
+      res.json(result)
+    })
+   
 });
 
 // This gets document based on id so I can get task array
 recordRoutes.route("/projects/:id").get(function (req, res) {
   let db_connect = dbo.getDb();
   let myQuery = { name: req.params.id };
-  
+
   db_connect.collection("projects").findOne(myQuery, function (err, result) {
     if (err) throw err;
     res.json(result);
@@ -41,7 +42,6 @@ recordRoutes.route("/projects/add").post(function (req, response) {
     tasks: [],
     name: req.body.name,
     description: req.body.description,
-    
   };
   db_connect.collection("projects").insertOne(myobj, function (err, res) {
     if (err) throw err;
@@ -164,15 +164,14 @@ recordRoutes
     let myQuery = { name: projectName };
 
     //increase by secondsElapsed
-  
+
     let newValues = {
       $inc: {
         [`tasks.${index}.seconds`]: parseInt(secondsElapsed),
         weekly: parseInt(secondsElapsed),
         daily: parseInt(secondsElapsed),
-        total: parseInt(secondsElapsed)
+        total: parseInt(secondsElapsed),
       },
-    
     };
 
     db_connect
@@ -184,61 +183,17 @@ recordRoutes
       });
   });
 
-// This section will help you delete a record // not using this rn
-// recordRoutes.route("/:id").delete((req, response) => {
-//   let db_connect = dbo.getDb();
-//   let myquery = { _id: ObjectId(req.params.id) };
-//   db_connect.collection("records").deleteOne(myquery, function (err, obj) {
-//     if (err) throw err;
-//     console.log("1 document deleted");
-//     response.json(obj);
-//   });
-// });
-
-// recordRoutes.route("/:projectName/dates-for-seconds").get((req, res) => {
-//   let currDate = new Date();
-//   let projectName = req.params.projectName
-//   let myQuery = {name: projectName, "tasks.secUpdated" }
-
-//   db_connect.collection("projects")
-//   .aggregate([
-//     { $match: { name: projectName } }, // Match the specific project
-//     {
-//       $project: {
-//         _id: 0, // Exclude the _id field from the output
-//         secUpdated: "$tasks.secUpdated", // Extract the 'secUpdated' field from 'tasks'
-//       },
-//     },
-//   ])
-//   .then((result) => {
-//     if (result.length === 0) {
-//       return res.status(404).json({ message: "Project not found" });
-//     }
-//     const secUpdatedArray = result[0].secUpdated;
-//     res.json(secUpdatedArray);
-//   })
-//   .catch((err) => {
-//     console.error("Error retrieving project:", err);
-//     res.status(500).json({ message: "Error retrieving project" });
-//   });
-
-// })
-
-
 recordRoutes.route("/:projectName/set-current-task").post((req, response) => {
-  
-
   let db_connect = dbo.getDb();
 
- 
   let projectName = req.params.projectName;
 
   let myQuery = { name: projectName };
-  console.log("in current")
+  console.log("in current");
   let newValues = {
     $set: {
-      currentTask: parseInt(req.body.index)
-    }
+      currentTask: parseInt(req.body.index),
+    },
   };
 
   db_connect
@@ -250,26 +205,23 @@ recordRoutes.route("/:projectName/set-current-task").post((req, response) => {
     });
 });
 
-
-//create new user 
+//create new user
 recordRoutes.route("/add-user").post(async function (req, response) {
   let db_connect = dbo.getDb();
-  let data = {_id: req.body.sub }
+  let data = { _id: req.body.sub };
 
   //Check if user already exists
-  const docExists = await db_connect.collection("projects").findOne(data)
+  const docExists = await db_connect.collection("projects").findOne(data);
 
-  if(docExists){
-    console.log("document already exists")
+  if (docExists) {
+    console.log("document already exists");
     return;
   }
-  
+
   db_connect.collection("projects").updateOne(data, function (err, res) {
     if (err) throw err;
     response.json(res);
   });
 });
-
-
 
 module.exports = recordRoutes;
