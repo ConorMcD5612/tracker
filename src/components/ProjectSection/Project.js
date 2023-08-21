@@ -14,7 +14,7 @@ export const Project = (props) => {
         </span>
 
         <span className="project-link">
-          <Link to={props.name}>
+          <Link state={{index: props.key}}to={props.name}>
             <button>
               <ArrowRight color="#24e2e8df" />
             </button>

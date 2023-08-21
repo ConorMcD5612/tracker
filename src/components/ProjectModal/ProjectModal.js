@@ -9,6 +9,7 @@ import { HourInfo } from "./HourInfo";
 import { TaskContext } from "../context/TaskContext";
 import "./taskStyles.scss";
 import { useAuth } from "../context/AuthContext";
+import { useLocation } from "react-router";
 
 
 export const ProjectModal = () => {
@@ -21,8 +22,9 @@ export const ProjectModal = () => {
     tasks,
     setTasks,
   };
+  const location = useLocation()
 
-  const { user } = useAuth
+  const { user } = useAuth()
   const params = useParams()
 
 
@@ -30,8 +32,8 @@ export const ProjectModal = () => {
     fetch(`http://localhost:5000/projects/${user}/${params.id}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        setTasks(data.projects.tasks);
+        console.log(location)
+        setTasks(data.projects[location.state.index].tasks);
         setProjectInfo(data)
       });
   }, [tasks.length]);

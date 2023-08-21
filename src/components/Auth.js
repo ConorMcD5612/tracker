@@ -16,7 +16,7 @@ export function Auth({setIsLoading}) {
     setUser(sub);
 
     // Make an API call to add user if they don't exist
-    
+    console.log(sub)
     await fetch(`http://localhost:5000/add-user`, {
       method: 'POST',
       headers: {

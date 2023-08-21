@@ -25,10 +25,11 @@ recordRoutes.route("/projects/:user").get(function (req, res) {
     
 });
 
-// This gets document based on user so I can get project 
+// This gets document based on user so I can get indivdual project 
 recordRoutes.route("/projects/:user/:projectName").get(function (req, res) {
   let db_connect = dbo.getDb();
-  let myQuery = { _id: req.params.user, "projects": {projectName: req.params.projectName} };
+  console.log(req.params.projectName)
+  let myQuery = { _id: req.params.user };
   
 
   db_connect.collection("projects").findOne(myQuery, function (err, result) {
@@ -62,12 +63,12 @@ recordRoutes.route("/projects/:user/add").post(function (req, response) {
 //Goal of this is to add tasks to tasks array
 recordRoutes.route("/projects/:user/:id").post(function (req, response) {
   const db_connect = dbo.getDb();
-  const myQuery = { _id: req.params.user};
+  const myQuery = { _id: req.params.user, "projects.name": req.params.id};
   const { description, tier } = req.body;
   console.log(req.params.id)
   let newValues = {
     $push: {
-      "projects.tasks": {
+      "projects.$.tasks": {
         description,
         tier,
         seconds: 0,
@@ -79,7 +80,7 @@ recordRoutes.route("/projects/:user/:id").post(function (req, response) {
   if (tier) {
     newValues = {
       $push: {
-        "projects.tasks": {
+        "projects.$.tasks": {
           $each: [
             {
               description,
@@ -218,7 +219,7 @@ recordRoutes.route("/:projectName/set-current-task").post((req, response) => {
 //create new user
 recordRoutes.route("/add-user").post(async function (req, response) {
   let db_connect = dbo.getDb();
-  let data = { _id: req.body.sub };
+  let data = { _id: req.body.sub, projects: [] };
 
   //Check if user already exists
   const docExists = await db_connect.collection("projects").findOne(data);
@@ -228,7 +229,7 @@ recordRoutes.route("/add-user").post(async function (req, response) {
     return;
   }
 
-  db_connect.collection("projects").updateOne(data, function (err, res) {
+  db_connect.collection("projects").insertOne(data, function (err, res) {
     if (err) throw err;
     response.json(res);
   });
