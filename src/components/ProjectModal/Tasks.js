@@ -14,6 +14,10 @@ export const Tasks = ({projectInfo}) => {
 
   const { tasks } = useContext(TaskContext);
 
+  useEffect(() => {
+    console.log(tasks)
+  })
+
   const [currentTask, setCurrentTask] = useState(0);
 
   const colors = ["#FA3BF0", "#FBF719", "#24e2e8df"];

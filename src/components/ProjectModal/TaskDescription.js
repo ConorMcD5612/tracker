@@ -1,13 +1,14 @@
 import React, { useState, useContext } from 'react'
 import { TaskContext } from '../context/TaskContext';
 import { useParams } from "react-router";
+import { useAuth } from '../context/AuthContext';
 
 export const TaskDescription = ({ task }) => {
   const [showInput, setShowInput] = useState(false);
   const [taskDescription, setTaskDescription] = useState(task.description);
   
 
-  
+  const {user} = useAuth()
   
   const params = useParams();
 
@@ -20,7 +21,7 @@ export const TaskDescription = ({ task }) => {
     };
 
     let projectName = params.id;
-    await fetch(`http://localhost:5000/edit-task/${projectName}`, {
+    await fetch(`http://localhost:5000/edit-task/${user}/${projectName}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
