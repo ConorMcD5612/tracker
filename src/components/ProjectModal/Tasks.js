@@ -14,6 +14,9 @@ export const Tasks = ({projectInfo}) => {
 
   const { tasks } = useContext(TaskContext);
 
+  const location = useLocation();
+  const background = location.state && location.state.background;
+
   useEffect(() => {
     console.log(tasks)
   })
@@ -61,7 +64,8 @@ export const Tasks = ({projectInfo}) => {
             setOpenSubIndex={setOpenSubIndex}
             openSubIndex={openSubIndex}
           />
-          <Outlet />
+          
+    
         </>
       ))}
       <AddRegularTask type="new" />

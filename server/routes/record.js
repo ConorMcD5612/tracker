@@ -238,10 +238,12 @@ recordRoutes.route("/:user/:projectName/set-current-task").post((req, response) 
 //create new user
 recordRoutes.route("/add-user").post(async function (req, response) {
   let db_connect = dbo.getDb();
+  let query = {_id: req.body.sub}
   let data = { _id: req.body.sub, projects: [] };
 
   //Check if user already exists
-  const docExists = await db_connect.collection("projects").findOne(data);
+
+  const docExists = await db_connect.collection("projects").findOne(query);
 
   if (docExists) {
     console.log("document already exists");
