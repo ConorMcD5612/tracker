@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Modal from "react-modal";
 import { useParams } from "react-router";
 import { useContext } from "react";
@@ -11,9 +11,10 @@ export const AddTaskForm = ({...props }) => {
   const params = useParams();
   const {tasks, setTasks} = useContext(TaskContext)
 
+
   const taskInput = async (e) => {
     e.preventDefault();
-
+ 
     let newTask = {};
     let tempArr = [...tasks];
 
@@ -23,15 +24,13 @@ export const AddTaskForm = ({...props }) => {
         tier: tasks[props.index].tier + 1,
         description: taskDescription,
         seconds: 0,
+
+   
       };
       console.log(props.index);
 
-      tempArr = tasks.splice(props.index + 1, 0, newTask);
-      console.log(tasks)
-
-      console.log(tempArr);
-
-      setTasks(tempArr);
+      tempArr.splice(props.index + 1, 0, newTask);
+      setTasks([...tempArr]);
     }
 
     if (props.type == "new") {
@@ -39,10 +38,11 @@ export const AddTaskForm = ({...props }) => {
       newTask = {
         tier: 0,
         description: taskDescription,
+        
       };
 
       tempArr = [...tasks, newTask];
-      setTasks(tempArr);
+     setTasks(tempArr);
     }
 
     await fetch(`http://localhost:5000/projects/${user}/${params.id}`, {

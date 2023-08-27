@@ -9,7 +9,7 @@ import { useAuth } from "../context/AuthContext";
 export const Timer = () => {
   const stopwatch = useStopwatch();
   const [[minutes, seconds], setMinSec] = useState([0, 0]);
-  const [startSeconds, setStartSeconds] = useState(10 * 1);
+  const [startSeconds, setStartSeconds] = useState(40 * 60);
   const [showInput, setShowInput] = useState(false);
 
   const navigate = useNavigate();

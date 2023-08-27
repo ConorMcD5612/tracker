@@ -26,7 +26,6 @@ function App() {
           {isLoading ? null : (
             <div>
               <Routes location={background || location}>
-               
                 <Route element={<PrivateRoute />}>
                 <Route path="projects" element={<ProjectSection />} />
                   <Route path="add-project" element={<AddProject />} />
