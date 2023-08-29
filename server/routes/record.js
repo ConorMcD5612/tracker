@@ -25,6 +25,12 @@ recordRoutes.route("/projects/:user").get(function (req, res) {
     
 });
 
+
+
+
+// THESE TWO ARE THE SAME WILL REMOVE ONE 
+
+
 // This gets document based on user so I can get indivdual project 
 recordRoutes.route("/projects/:user/:projectName").get(function (req, res) {
   let db_connect = dbo.getDb();
@@ -103,7 +109,9 @@ recordRoutes.route("/projects/:user/:id").post(function (req, response) {
 });
 
 // Remove a task changing the record not deleting it
-recordRoutes.route("/remove-task/:id").post((req, response) => {
+//doing this based on description, duplicate tasks should be allowed though
+// will fix later
+recordRoutes.route("/remove-task/:user/:id").post((req, response) => {
   console.log(req.body);
 
   let db_connect = dbo.getDb();
@@ -111,11 +119,12 @@ recordRoutes.route("/remove-task/:id").post((req, response) => {
   let taskDescription = req.body.description;
   let projectName = req.params.id;
 
-  let myQuery = { name: projectName };
+  let myQuery = { _id: req.params.user, "projects.name": projectName };
+
   console.log(`THIS IS TASK NAME:   ${taskDescription}`);
   let newValues = {
     $pull: {
-      tasks: { description: taskDescription },
+      "projects.$.tasks": { description: taskDescription },
     },
   };
 
@@ -129,7 +138,8 @@ recordRoutes.route("/remove-task/:id").post((req, response) => {
 });
 
 //edit task update it in db
-recordRoutes.route("/edit-task/:id").post((req, response) => {
+//this will also not ignore duplicates
+recordRoutes.route("/edit-task/:user/:id").post((req, response) => {
   let db_connect = dbo.getDb();
   console.log(req.body);
 
@@ -140,48 +150,57 @@ recordRoutes.route("/edit-task/:id").post((req, response) => {
 
   let projectName = req.params.id;
 
-  let myQuery = { name: projectName, "tasks.description": oldDesc };
+  let myQuery = {
+    _id: req.params.user,
+    "projects.name": projectName
+  };
 
-  //right now is just deletes the task?
-  //query is good
   let newValues = {
     $set: {
-      "tasks.$.description": updatedDesc,
+      "projects.$.tasks.$[task].description": updatedDesc
     },
   };
 
-  db_connect
-    .collection("projects")
-    .updateOne(myQuery, newValues, function (err, res) {
+  let arrayFilters = [
+    { "task.description": oldDesc }
+  ];
+  
+
+  db_connect.collection("projects").updateOne(
+    myQuery,
+    newValues,
+    { arrayFilters: arrayFilters },
+    function (err, res) {
       if (err) throw err;
       console.log("updated 1 task");
       response.json(res);
-    });
+    }
+  );
 });
 
-//edit time on task
+//add time to task object
 recordRoutes
-  .route("/timer/:projectName/task/:taskIndex")
+  .route("/timer/:user/:projectName/task/:taskIndex")
   .post((req, response) => {
     let db_connect = dbo.getDb();
 
     let secondsElapsed = req.body.totalElapsedSeconds;
-    console.log(secondsElapsed);
+    console.log("seconds elapsed",secondsElapsed);
 
     let projectName = req.params.projectName;
     let index = parseInt(req.params.taskIndex);
-    console.log(index);
+    console.log("index",index);
 
-    let myQuery = { name: projectName };
+    let myQuery = { _id: req.params.user, "projects.name": projectName };
 
     //increase by secondsElapsed
 
     let newValues = {
       $inc: {
-        [`tasks.${index}.seconds`]: parseInt(secondsElapsed),
-        weekly: parseInt(secondsElapsed),
-        daily: parseInt(secondsElapsed),
-        total: parseInt(secondsElapsed),
+        [`projects.$.tasks.${index}.seconds`]: parseInt(secondsElapsed),
+        "projects.$.weekly": parseInt(secondsElapsed),
+       "projects.$.daily": parseInt(secondsElapsed),
+        "projects.$.total": parseInt(secondsElapsed),
       },
     };
 
@@ -194,16 +213,16 @@ recordRoutes
       });
   });
 
-recordRoutes.route("/:projectName/set-current-task").post((req, response) => {
+recordRoutes.route("/:user/:projectName/set-current-task").post((req, response) => {
   let db_connect = dbo.getDb();
 
   let projectName = req.params.projectName;
 
-  let myQuery = { name: projectName };
+  let myQuery = { _id: req.params.user, "projects.name": projectName };
   console.log("in current");
   let newValues = {
     $set: {
-      currentTask: parseInt(req.body.index),
+      "projects.$.currentTask": parseInt(req.body.index),
     },
   };
 
@@ -219,10 +238,12 @@ recordRoutes.route("/:projectName/set-current-task").post((req, response) => {
 //create new user
 recordRoutes.route("/add-user").post(async function (req, response) {
   let db_connect = dbo.getDb();
+  let query = {_id: req.body.sub}
   let data = { _id: req.body.sub, projects: [] };
 
   //Check if user already exists
-  const docExists = await db_connect.collection("projects").findOne(data);
+
+  const docExists = await db_connect.collection("projects").findOne(query);
 
   if (docExists) {
     console.log("document already exists");

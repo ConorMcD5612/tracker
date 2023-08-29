@@ -8,9 +8,8 @@ import { useAuth } from "../context/AuthContext";
 
 export const ProjectSection = () => {
   const [projects, setProjects] = useState([]);
+
   const { user } = useAuth()
-
-
 
   const getProjects = () => {
     fetch(`http://localhost:5000/projects/${user}`)

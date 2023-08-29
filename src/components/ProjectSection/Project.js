@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "react-feather";
+import { useEffect } from "react";
 
 export const Project = (props) => {
+
+  useEffect(() => {
+    console.log(props)
+  })
   return (
     <>
       <div className="project-flex">

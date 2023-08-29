@@ -14,6 +14,13 @@ export const Tasks = ({projectInfo}) => {
 
   const { tasks } = useContext(TaskContext);
 
+  const location = useLocation();
+  const background = location.state && location.state.background;
+
+  useEffect(() => {
+    console.log(tasks)
+  })
+
   const [currentTask, setCurrentTask] = useState(0);
 
   const colors = ["#FA3BF0", "#FBF719", "#24e2e8df"];
@@ -43,6 +50,7 @@ export const Tasks = ({projectInfo}) => {
           <Task
             task={task}
             index={index}
+            key={Date.now()}
             openSubIndex={openSubIndex}
             setOpenSubIndex={setOpenSubIndex}
             color={colorPicker(task.tier)}
@@ -57,7 +65,8 @@ export const Tasks = ({projectInfo}) => {
             setOpenSubIndex={setOpenSubIndex}
             openSubIndex={openSubIndex}
           />
-          <Outlet />
+          
+    
         </>
       ))}
       <AddRegularTask type="new" />
