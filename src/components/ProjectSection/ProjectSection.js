@@ -36,7 +36,7 @@ export const ProjectSection = () => {
 
         <div className="list-group">
           {projects?.map((project, index) => (
-            <Project key={index} name={project.name} hours={project.hours} />
+            <Project key={index} index={index} name={project.name} hours={project.hours} />
           ))}
 
           <div className="add-project-btn">

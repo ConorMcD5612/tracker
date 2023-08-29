@@ -33,6 +33,7 @@ export const ProjectModal = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(location)
+        console.log(location.state.index)
         setTasks(data.projects[location.state.index].tasks);
         setProjectInfo(data)
       });
