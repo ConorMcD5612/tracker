@@ -32,10 +32,16 @@ export const ProjectModal = () => {
     fetch(`http://localhost:5000/projects/${user}/${params.id}`)
       .then((response) => response.json())
       .then((data) => {
+<<<<<<< HEAD
         console.log(location)
         console.log(location.state.index)
+=======
+      
+        console.log(data.projects[location.state.index].tasks)
+        //passing index from projects map in order to find the individual project in db
+>>>>>>> e92f49cab946d704c5e8c76232baa64d81ebcbbd
         setTasks(data.projects[location.state.index].tasks);
-        setProjectInfo(data)
+        setProjectInfo(data.projects[location.state.index])
       });
   }, [tasks.length]);
 

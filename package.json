@@ -2,6 +2,7 @@
   "name": "tracker",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://conormcd5612.github.io/tracker",
   "dependencies": {
     "@iconscout/react-unicons": "^1.1.6",
     "@iconscout/unicons": "^4.0.1",
@@ -11,6 +12,8 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.1",
     "bootstrap-icons": "^1.9.1",
+    "gh-pages": "^6.0.0",
+    "heroku": "^8.4.1",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -24,10 +27,17 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+   
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "build": "cd src && npm run build",
+    "install-client": "cd src && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "server": "nodemon ./server/server.js",
+    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\""
+    
   },
   "eslintConfig": {
     "extends": [

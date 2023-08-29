@@ -10,7 +10,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin, googleLogin } from "@react-oauth/google";
 import { AuthProvider, useAuth } from "./components/context/AuthContext";
 import { Auth } from "./components/Auth";
-
+import { PrivateRoute } from "./components/PrivateRoute";
+import { LoginPage } from "./components/LoginPage/LoginPage";
 
 function App() {
   const location = useLocation();
@@ -24,33 +25,36 @@ function App() {
         <>
           {isLoading ? null : (
             <div>
-              <Routes>
-                <Route path="projects" element={<ProjectSection />} />
-                <Route path="add-project" element={<AddProject />} />
-              </Routes>
-
               <Routes location={background || location}>
-                <Route path="/projects/:id" element={<ProjectModal />}>
-                  <Route path="timer/:taskID" element={<Timer />} />
+                <Route element={<PrivateRoute />}>
+                <Route path="projects" element={<ProjectSection />} />
+                  <Route path="add-project" element={<AddProject />} />
+                  <Route path="/projects/:id" element={<ProjectModal />}>
+                    <Route path="timer/:taskID" element={<Timer />} />
+                  </Route>
                 </Route>
+                <Route path="*" element={<h1>404 not found</h1>} />
               </Routes>
 
               {background && (
                 <Routes>
-                  <Route
-                    path="/projects/:projectName/timer/task/:taskIndex"
-                    element={<Timer />}
-                  />
+                  <Route element={<PrivateRoute />}>
+                    <Route
+                      path="/projects/:projectName/timer/task/:taskIndex"
+                      element={<Timer />}
+                    />
+                  </Route>
                 </Routes>
               )}
             </div>
           )}
-
           <Auth setIsLoading={setIsLoading}/>
         </>
       </AuthProvider>
     </GoogleOAuthProvider>
   );
 }
+
+// <Route path="*" element={<h1>404 not found</h1>} />
 
 export default App;

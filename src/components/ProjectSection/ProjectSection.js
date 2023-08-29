@@ -8,9 +8,8 @@ import { useAuth } from "../context/AuthContext";
 
 export const ProjectSection = () => {
   const [projects, setProjects] = useState([]);
+
   const { user } = useAuth()
-
-
 
   const getProjects = () => {
     fetch(`http://localhost:5000/projects/${user}`)
@@ -36,7 +35,11 @@ export const ProjectSection = () => {
 
         <div className="list-group">
           {projects?.map((project, index) => (
+<<<<<<< HEAD
             <Project key={index} index={index} name={project.name} hours={project.hours} />
+=======
+            <Project index={index} key={index} name={project.name} hours={project.hours} />
+>>>>>>> e92f49cab946d704c5e8c76232baa64d81ebcbbd
           ))}
 
           <div className="add-project-btn">
