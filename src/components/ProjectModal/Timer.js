@@ -55,7 +55,7 @@ export const Timer = () => {
     const totalElapsedSeconds = stopwatch.getElapsedRunningTime() / 1000;
     console.log("seconds elapsed client", totalElapsedSeconds)
     await fetch(
-      `http://localhost:5000/timer/${user}/${projectName}/task/${taskIndex}`,
+      `https://tracker-rust-seven.vercel.app/timer/${user}/${projectName}/task/${taskIndex}`,
       {
         method: "POST",
         headers: {
