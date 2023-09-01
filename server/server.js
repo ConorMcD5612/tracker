@@ -3,7 +3,7 @@
 // const cors = require("cors")
 // require("dotenv").config({path: "./env"});
 // const port = process.env.PORT || 5000;
-// // dont think I need cors what cors does is allow you to get information from other API endpoints than the one on your server I believe
+
 
 // app.use(cors())
 // app.use(express.json())
@@ -24,7 +24,13 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 5000;
-app.use(cors());
+app.use(cors(
+  {
+    origin: ["https://tracker-5ejy.vercel.app/"],
+    methods: ["POST", "GET"],
+    credentials: true
+  }
+));
 app.use(express.json());
 app.use(require("./routes/record"));
 // get driver connection
