@@ -6,11 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 //Icons
 
+//basename={process.env.PUBLIC_URL}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router >
       <App />
     </Router>
   </React.StrictMode>
