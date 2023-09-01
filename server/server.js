@@ -26,7 +26,7 @@ require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 5000;
 app.use(cors(
   {
-    origin: ["https://tracker-5ejy.vercel.app/"],
+    origin: ["https://tracker-5ejy.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true
   }
