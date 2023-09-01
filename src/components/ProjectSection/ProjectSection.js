@@ -12,7 +12,7 @@ export const ProjectSection = () => {
   const { user } = useAuth()
 
   const getProjects = () => {
-    fetch(`https://tracker-rust-seven.vercel.app/projects/${user}`)
+    fetch(`http://localhost:5000/projects/${user}`)
     .then((response) => response.json())
     .then((data) => {
       console.log(user)

@@ -29,7 +29,7 @@ export const ProjectModal = () => {
 
 
   useEffect(() => {
-    fetch(`https://tracker-rust-seven.vercel.app/projects/${user}/${params.id}`)
+    fetch(`http://localhost:5000/projects/${user}/${params.id}`)
       .then((response) => response.json())
       .then((data) => {
       

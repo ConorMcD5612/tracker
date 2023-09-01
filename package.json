@@ -2,7 +2,6 @@
   "name": "tracker",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://conormcd5612.github.io/tracker",
   "dependencies": {
     "@iconscout/react-unicons": "^1.1.6",
     "@iconscout/unicons": "^4.0.1",
