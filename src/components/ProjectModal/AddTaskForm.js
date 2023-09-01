@@ -45,7 +45,7 @@ export const AddTaskForm = ({...props }) => {
      setTasks(tempArr);
     }
 
-    await fetch(`http://localhost:5000/projects/${user}/${params.id}`, {
+    await fetch(`https://tracker-rust-seven.vercel.app/projects/${user}/${params.id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

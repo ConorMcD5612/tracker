@@ -16,7 +16,7 @@ export const ClockBtn = ({ index, color }) => {
 
   const setCurrentTask = async () => {
     const projectName = params.id
-    await fetch(`http://localhost:5000/${user}/${projectName}/set-current-task`, {
+    await fetch(`https://tracker-rust-seven.vercel.app/${user}/${projectName}/set-current-task`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
