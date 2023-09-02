@@ -12,7 +12,7 @@ const dbo = require("../db/conn");
 const ObjectId = require("mongodb").ObjectId;
 
 // Get all projects
-recordRoutes.route("/projects/:user").get(function (req, res) {
+recordRoutes.route("https://tracker-rust-seven.vercel.app/projects/:user").get(function (req, res) {
   let db_connect = dbo.getDb("tracker");
   let query = {_id: req.params.user}
   console.log(query)
