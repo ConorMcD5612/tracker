@@ -7,7 +7,7 @@ const port = process.env.PORT || 5000;
 //hello dood
 app.use(cors(
   {
-    origin: ["https://tracker-5ejy.vercel.app", "localhost:3000"],
+    origin: ["https://tracker-5ejy.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true
   }
