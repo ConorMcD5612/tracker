@@ -9,7 +9,7 @@ import { useAuth } from "../context/AuthContext";
 export const Timer = () => {
   const stopwatch = useStopwatch();
   const [[minutes, seconds], setMinSec] = useState([0, 0]);
-  const [startSeconds, setStartSeconds] = useState(10 * 1);
+  const [startSeconds, setStartSeconds] = useState(40 * 60);
   const [showInput, setShowInput] = useState(false);
 
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ export const Timer = () => {
     const totalElapsedSeconds = stopwatch.getElapsedRunningTime() / 1000;
     console.log("seconds elapsed client", totalElapsedSeconds)
     await fetch(
-      `http://localhost:5000/timer/${user}/${projectName}/task/${taskIndex}`,
+      `https://tracker-rust-seven.vercel.app/timer/${user}/${projectName}/task/${taskIndex}`,
       {
         method: "POST",
         headers: {

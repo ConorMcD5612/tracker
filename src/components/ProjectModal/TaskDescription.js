@@ -21,7 +21,7 @@ export const TaskDescription = ({ task }) => {
     };
 
     let projectName = params.id;
-    await fetch(`http://localhost:5000/edit-task/${user}/${projectName}`, {
+    await fetch(`https://tracker-rust-seven.vercel.app/edit-task/${user}/${projectName}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

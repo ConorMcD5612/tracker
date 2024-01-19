@@ -50,6 +50,7 @@ export const Tasks = ({projectInfo}) => {
           <Task
             task={task}
             index={index}
+            key={Date.now()}
             openSubIndex={openSubIndex}
             setOpenSubIndex={setOpenSubIndex}
             color={colorPicker(task.tier)}

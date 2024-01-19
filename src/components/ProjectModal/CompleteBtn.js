@@ -12,7 +12,7 @@ export const CompleteBtn = ({ task, color, projectInfo, index }) => {
 
   const completeTask = async () => {
     let projectName = params.id;
-    await fetch(`http://localhost:5000/remove-task/${user}/${projectName}`, {
+    await fetch(`https://tracker-rust-seven.vercel.app/remove-task/${user}/${projectName}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
