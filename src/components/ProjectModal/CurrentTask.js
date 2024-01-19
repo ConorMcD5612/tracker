@@ -37,7 +37,6 @@ export const CurrentTask = ({ task, index, color }) => {
           <TaskSeconds task={task} />
           <div className="task-buttons">
             <ClockBtn index={index} color={color} />
-           
           </div>
         </div>
       ) : null}
