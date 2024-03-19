@@ -19,7 +19,7 @@ app.use(require("../routes/record"));
 const dbo = require("../db/conn");
 
 app.get("/", (req, res) => {
-  res.json("WORK")
+  res.json("TESTING")
 })
 
 app.listen(port, () => {

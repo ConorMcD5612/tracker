@@ -15,7 +15,7 @@ export function Auth({ setIsLoading }) {
 
     // Make an API call to add user if they don't exist
     console.log(sub);
-    await fetch(`http://localhost:5000/add-user`, {
+    await fetch(`https://tracker-rust-seven.vercel.app/add-user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
